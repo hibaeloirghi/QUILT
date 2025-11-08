@@ -89,6 +89,14 @@ CMD_ARGS=(
     --max_steps "$MAX_STEPS"
 )
 
+# Add debug flags if specified (for testing single questions)
+if [ ! -z "$DEBUG" ] && [ "$DEBUG" = "1" ]; then
+    CMD_ARGS+=(--debug)
+    if [ ! -z "$DEBUG_ID" ]; then
+        CMD_ARGS+=(--debug_id "$DEBUG_ID")
+    fi
+fi
+
 if [ ! -z "$WOLFRAMALPHA_API_KEY" ]; then
     CMD_ARGS+=(--wolframalpha_api_key "$WOLFRAMALPHA_API_KEY")
 fi

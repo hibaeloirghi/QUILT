@@ -3,6 +3,7 @@ import argparse
 import jsonlines
 import datetime
 import sys
+import numpy as np
 
 # Add ReAct code directory to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../ReAct/code'))
@@ -22,7 +23,7 @@ parser.add_argument("--path", type=str, default="/fs/nexus-scratch/eloirghi/QUIL
                     help="Path to ToolQA root directory")
 parser.add_argument("--wolframalpha_api_key", type=str, default=None,
                     help="WolframAlpha API key for calculator tool")
-parser.add_argument("--debug", type=bool, default=False,
+parser.add_argument("--debug", action="store_true",
                     help="Debug mode: run single question")
 parser.add_argument("--debug_id", type=int, default=0,
                     help="Question index for debug mode")
@@ -94,11 +95,47 @@ else:
     os.makedirs(args.output_dir, exist_ok=True)
     print(f"Output directory: {args.output_dir}")
     
-    # Process all questions
+    # Load model once and reuse across questions to save memory
+    print("Loading model...")
+    import torch
+    from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+    from huggingface_hub.hf_api import HfFolder
+    
+    if args.hf_token:
+        HfFolder.save_token(args.hf_token)
+    
+    dtype = torch.bfloat16
+    tokenizer = AutoTokenizer.from_pretrained(args.llama_model, trust_remote_code=True)
+    model = AutoModelForCausalLM.from_pretrained(
+        args.llama_model,
+        dtype=dtype,
+        device_map="auto",
+        max_memory={0: "20GiB"},
+        trust_remote_code=True
+    )
+    
+    pipe = pipeline(
+        "text-generation",
+        model=model,
+        tokenizer=tokenizer,
+        device_map="auto",
+        dtype=dtype,
+        model_kwargs={"temperature": 0.0, "do_sample": False}
+    )
+    print("Model loaded successfully.")
+    
+    # Process all questions (or just one if debug mode)
     agents = []
     unanswered_questions = []
     
-    for i in range(len(contents)):
+    # If debug mode, only process one question
+    if args.debug:
+        indices = [args.debug_id] if args.debug_id < len(contents) else [0]
+        print(f"DEBUG MODE: Processing only question {args.debug_id}")
+    else:
+        indices = range(len(contents))
+    
+    for i in indices:
         qid = contents[i]['qid']
         question = contents[i]['question']
         answer = contents[i]['answer']
@@ -108,8 +145,10 @@ else:
         print(f"Question: {question}")
         print(f"{'='*60}\n")
         
+        # Create agent with pre-loaded model
         agent = ReactAgent(args, question, answer, max_steps=args.max_steps,
-                          llama_model_name=args.llama_model, hf_token=args.hf_token)
+                          llama_model_name=args.llama_model, hf_token=args.hf_token,
+                          preloaded_pipe=pipe, preloaded_tokenizer=tokenizer)
         
         try:
             agent.run()
@@ -126,6 +165,12 @@ else:
             print(f'  Tool H(Z|a): {sum(entropy_data["tool_entropies"]):.4f}')
             print(f'  STA-P: {entropy_data["sta_predictive"]:.4f}')
             print(f'  STA-S: {entropy_data["sta_semantic"]:.4f}')
+            print(f'\nFew-Shot Analysis:')
+            print(f'  Few-shot examples: {entropy_data.get("fewshot_examples", 0)}')
+            print(f'  Step-wise entropies: {len(entropy_data.get("step_entropies", []))} steps tracked')
+            if entropy_data.get("step_entropies"):
+                avg_step_entropy = np.mean([s["predictive_entropy"] for s in entropy_data["step_entropies"] if s.get("predictive_entropy") is not None])
+                print(f'  Avg step entropy: {avg_step_entropy:.4f}')
             print('-'*60)
             
             # Save log
@@ -176,6 +221,13 @@ BEGIN TRIAL {qid}
             unanswered_questions.append(qid)
         
         agents.append(agent)
+        
+        # Clean up GPU memory between questions to prevent OOM # kept running into this problemo
+        try:
+            import torch
+            torch.cuda.empty_cache()
+        except:
+            pass
     
     # Summary
     correct, incorrect, halted = summarize_react_trial(agents)
