@@ -17,7 +17,12 @@ export TF_FORCE_GPU_ALLOW_GROWTH=true
 
 # Set HuggingFace token and cache
 export HF_HOME="/fs/nexus-scratch/eloirghi/.cache/huggingface"
-export HF_TOKEN="${HF_TOKEN:-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}"
+# HF_TOKEN must be set as an environment variable - do not hardcode tokens in this file
+if [ -z "$HF_TOKEN" ]; then
+    echo "Error: HF_TOKEN environment variable not set"
+    echo "Please set it with: export HF_TOKEN=your_token"
+    exit 1
+fi
 export PIP_CACHE_DIR="/fs/nexus-scratch/eloirghi/.cache/pip"
 
 # Print job info
@@ -51,12 +56,7 @@ MAX_STEPS=20
 # Optional: WolframAlpha API key for calculator tool
 # WOLFRAMALPHA_API_KEY="your_key_here"
 
-# Check if HF token is set
-if [ -z "$HF_TOKEN" ]; then
-    echo "Error: HF_TOKEN not set for model inference"
-    echo "Set it with: export HF_TOKEN=your_token"
-    exit 1
-fi
+# HF_TOKEN check is done earlier in the script
 
 # Print configuration
 echo "Configuration:"
@@ -94,7 +94,21 @@ if [ ! -z "$WOLFRAMALPHA_API_KEY" ]; then
 fi
 
 echo "Running command:"
-echo "python benchmark/LLaMA/code/test_llama_react.py ${CMD_ARGS[*]}"
+# Create a safe display version that masks the HF token
+SAFE_CMD_ARGS=()
+SKIP_NEXT=false
+for arg in "${CMD_ARGS[@]}"; do
+    if [ "$SKIP_NEXT" = true ]; then
+        SAFE_CMD_ARGS+=("***MASKED***")
+        SKIP_NEXT=false
+    elif [[ "$arg" == "--hf_token" ]]; then
+        SAFE_CMD_ARGS+=("--hf_token")
+        SKIP_NEXT=true
+    else
+        SAFE_CMD_ARGS+=("$arg")
+    fi
+done
+echo "python benchmark/LLaMA/code/test_llama_react.py ${SAFE_CMD_ARGS[*]}"
 echo ""
 
 # Execute the command
