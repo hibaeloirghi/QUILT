@@ -129,6 +129,23 @@ class LlamaLLM(BaseLLM):
         text, _ = self._call_with_logprobs(prompt, stop)
         return text
     
+    def _generate(
+        self,
+        prompts: List[str],
+        stop: Optional[List[str]] = None,
+        run_manager = None,
+        **kwargs,
+    ):
+        """Generate responses for a list of prompts (required by BaseLLM)"""
+        from langchain_core.outputs import LLMResult, Generation
+        
+        generations = []
+        for prompt in prompts:
+            text = self._call(prompt, stop)
+            generations.append([Generation(text=text)])
+        
+        return LLMResult(generations=generations)
+    
     @property
     def _llm_type(self) -> str:
         return "llama"
