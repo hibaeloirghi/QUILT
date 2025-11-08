@@ -91,6 +91,37 @@ def query_llm(cuda_idxes, query, is_local=True, start=None, end=None):
     retrieval_content = '\n'.join(retrieval_content)
     return retrieval_content
 
+def query_llm_with_scores(cuda_idxes, query, is_local=True, start=None, end=None):
+    """
+    Query with scores for entropy calculation.
+    Returns (retrieval_content, scores) where scores are similarity scores.
+    """
+    number_of_processes = len(cuda_idxes)
+    input_texts = []
+    db = create_chroma_db_local(CHROMA_PERSIST_DIRECTORY, CHROMA_COLLECTION_NAME)
+    with open(FILE_PATH, 'r') as f:
+        for item in jsonlines.Reader(f):
+            input_texts.append(item["event"])
+    
+    # Ensure DB is populated
+    if len(os.listdir(CHROMA_PERSIST_DIRECTORY)) == 0:
+        insert_to_db(input_texts, model_name=EMBED_MODEL_NAME, cuda_idx=0, db=db)
+    
+    model = sentence_transformers.SentenceTransformer(EMBED_MODEL_NAME, device=f"cuda:0")
+    query_embedding = sentence_embedding(model, query).tolist()
+    results = db.query(query_embeddings=query_embedding, n_results=3, include=['documents', 'distances'])
+    
+    retrieval_content = [result for result in results['documents'][0]]
+    retrieval_content = '\n'.join(retrieval_content)
+    
+    # Convert distances to similarity scores (ChromaDB returns distances, lower is better)
+    # We'll use negative distances as scores, or convert to similarity
+    distances = results['distances'][0] if 'distances' in results else []
+    # Convert distances to similarity scores (1 / (1 + distance) or negative distance)
+    scores = np.array([-d for d in distances]) if len(distances) > 0 else np.array([])
+    
+    return retrieval_content, scores
+
 def main(cuda_idxes, query):
     print(query_llm(cuda_idxes, query))
 
