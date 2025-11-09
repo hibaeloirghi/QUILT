@@ -52,6 +52,7 @@ HARDNESS="${2:-easy}"    # easy or hard
 PROMPT="${3:-easy}"       # easy or hard (prompt type)
 LLAMA_MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct"
 MAX_STEPS=20
+MAX_QUESTIONS="${4:-50}"  # Number of questions to process (default: 50)
 
 # Optional: WolframAlpha API key for calculator tool
 # WOLFRAMALPHA_API_KEY="your_key_here"
@@ -66,6 +67,7 @@ echo "  Hardness: $HARDNESS"
 echo "  Prompt type: $PROMPT"
 echo "  Llama model: $LLAMA_MODEL"
 echo "  Max steps: $MAX_STEPS"
+echo "  Max questions: $MAX_QUESTIONS"
 echo ""
 
 # Check if question file exists
@@ -87,6 +89,7 @@ CMD_ARGS=(
     --llama_model "$LLAMA_MODEL"
     --hf_token "$HF_TOKEN"
     --max_steps "$MAX_STEPS"
+    --max_questions "$MAX_QUESTIONS"
 )
 
 # Add debug flags if specified (for testing single questions)

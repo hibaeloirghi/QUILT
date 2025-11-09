@@ -143,7 +143,16 @@ class LlamaLLM(BaseLLM):
             if i < len(outputs.scores):
                 logits = outputs.scores[i][0]
                 log_probs = torch.log_softmax(logits, dim=-1)
-                logprobs.append(log_probs[token_id].item())
+                logprob_value = log_probs[token_id].item()
+                # Convert logprob to probability for human readability
+                prob_value = torch.exp(log_probs[token_id]).item()
+                # Decode the token for human readability
+                token_text = self.tokenizer.decode([token_id], skip_special_tokens=True)
+                logprobs.append({
+                    "token": token_text,
+                    "logprob": logprob_value,
+                    "prob": prob_value
+                })
         
         # Decode only the generated part (not the full sequence)
         generated_text = self.tokenizer.decode(generated_ids, skip_special_tokens=True)
@@ -350,6 +359,10 @@ class ReactAgent:
         """
         After agent finishes, sample N answers and compute entropies
         """
+        import sys
+        print(f"Sampling {n_samples} answers for entropy computation...")
+        sys.stdout.flush()
+        
         # Build prompt with final scratchpad (includes tool outputs)
         prompt = self._build_agent_prompt()
         prompt += f"\nAction {self.step_n}: Finish["
@@ -364,7 +377,10 @@ class ReactAgent:
         object.__setattr__(self.llm, 'temperature', temperature)
         object.__setattr__(self.llm, 'max_tokens', 50)  # Allow up to 50 tokens for answer
         
-        for _ in range(n_samples):
+        for i in range(n_samples):
+            if (i + 1) % 5 == 0:
+                print(f"  Sample {i+1}/{n_samples}...")
+                sys.stdout.flush()
             # First try with stop sequence
             text, logprobs = self.llm._call_with_logprobs(prompt, stop=["]", "\n"])
             
@@ -423,6 +439,9 @@ class ReactAgent:
         self.entropy_data['answer_logprobs'] = logprobs
         
         # Compute entropies
+        print("Computing entropy metrics...")
+        sys.stdout.flush()
+        
         from entropy_utils import (
             compute_predictive_entropy, 
             compute_semantic_entropy

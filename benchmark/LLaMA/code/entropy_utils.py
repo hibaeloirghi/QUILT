@@ -4,24 +4,35 @@ from collections import Counter
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import AgglomerativeClustering
 
-def compute_predictive_entropy(logprobs_list: List[List[float]]) -> float:
+def compute_predictive_entropy(logprobs_list: List[List]) -> float:
     """
     Compute predictive entropy H(Y|Z,x) from N sampled sequences
     
     Args:
-        logprobs_list: List of per-token log probabilities for each sample
+        logprobs_list: List of per-token log probabilities for each sample.
+                      Each element can be:
+                      - A float (backward compatibility)
+                      - A dict with "logprob" key: {"token": str, "logprob": float}
     
     Returns:
         Predictive entropy (average negative log probability)
     """
     sequence_logprobs = []
     for logprobs in logprobs_list:
+        # Extract logprob values (handle both dict and float formats)
+        if logprobs and isinstance(logprobs[0], dict):
+            # New format: list of dicts with "token" and "logprob"
+            logprob_values = [item["logprob"] for item in logprobs if isinstance(item, dict)]
+        else:
+            # Old format: list of floats (backward compatibility)
+            logprob_values = [item for item in logprobs if isinstance(item, (int, float))]
+        
         # Sum log probs across tokens in sequence
-        seq_logprob = sum(logprobs)
+        seq_logprob = sum(logprob_values) if logprob_values else 0.0
         sequence_logprobs.append(seq_logprob)
     
     # Monte Carlo estimate: -1/N * sum of log p(y_i | z, x)
-    entropy = -np.mean(sequence_logprobs)
+    entropy = -np.mean(sequence_logprobs) if sequence_logprobs else 0.0
     return entropy
 
 def compute_semantic_entropy(answers: List[str], threshold: float = 0.5) -> float:

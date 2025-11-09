@@ -35,6 +35,8 @@ parser.add_argument("--hf_token", type=str, default=None,
                     help="HuggingFace token for accessing Llama models")
 parser.add_argument("--max_steps", type=int, default=20,
                     help="Maximum number of steps for the agent")
+parser.add_argument("--max_questions", type=int, default=None,
+                    help="Maximum number of questions to process (None = all)")
 parser.add_argument("--output_dir", type=str, default=None,
                     help="Output directory for logs and results")
 
@@ -74,14 +76,45 @@ if args.debug:
         print(f"Error: debug_id {random_indices} is out of range (max: {len(contents)-1})")
         sys.exit(1)
     
+    # Load model once for debug mode too (to match normal mode behavior)
+    print("Loading model...")
+    import torch
+    from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+    from huggingface_hub.hf_api import HfFolder
+    
+    if args.hf_token:
+        HfFolder.save_token(args.hf_token)
+    
+    dtype = torch.bfloat16
+    tokenizer = AutoTokenizer.from_pretrained(args.llama_model, trust_remote_code=True)
+    model = AutoModelForCausalLM.from_pretrained(
+        args.llama_model,
+        dtype=dtype,
+        device_map="auto",
+        max_memory={0: "20GiB"},
+        trust_remote_code=True
+    )
+    
+    pipe = pipeline(
+        "text-generation",
+        model=model,
+        tokenizer=tokenizer,
+        device_map="auto",
+        dtype=dtype,
+        model_kwargs={"temperature": 0.0, "do_sample": False}
+    )
+    print("Model loaded successfully.")
+    
     test_q = contents[random_indices]['question']
     test_a = contents[random_indices]['answer']
     print(f"\n=== Debug Mode: Question {random_indices} ===")
     print(f"Question: {test_q}")
     print(f"Answer: {test_a}\n")
     
+    # Use preloaded model in debug mode too
     agent = ReactAgent(args, test_q, test_a, max_steps=args.max_steps,
-                      llama_model_name=args.llama_model, hf_token=args.hf_token)
+                      llama_model_name=args.llama_model, hf_token=args.hf_token,
+                      preloaded_pipe=pipe, preloaded_tokenizer=tokenizer)
     agent.run()
     
     print(f"\n=== Agent Scratchpad ===")
@@ -90,6 +123,42 @@ if args.debug:
     print(f"Ground-Truth: {test_a}")
     print(f"Model Answer: {agent.answer}")
     print(f"Correct: {agent.is_correct()}")
+    
+    # Compute entropy in debug mode too
+    print("\n=== Computing Entropy ===")
+    import sys
+    sys.stdout.flush()
+    entropy_data = agent.compute_final_answer_entropy(n_samples=10, temperature=0.8)
+    
+    print(f'\nEntropy Metrics:')
+    print(f'  Predictive H(Y|Z,x): {entropy_data["predictive_entropy"]:.4f}')
+    print(f'  Semantic H_c(Y|Z,x): {entropy_data["semantic_entropy"]:.4f}')
+    print(f'  Tool H(Z|a): {sum(entropy_data["tool_entropies"]):.4f}')
+    print(f'  STA-P: {entropy_data["sta_predictive"]:.4f}')
+    print(f'  STA-S: {entropy_data["sta_semantic"]:.4f}')
+    print(f'\nFew-Shot Analysis:')
+    print(f'  Few-shot examples: {entropy_data.get("fewshot_examples", 0)}')
+    print(f'  Step-wise entropies: {len(entropy_data.get("step_entropies", []))} steps tracked')
+    if entropy_data.get("step_entropies"):
+        avg_step_entropy = np.mean([s["predictive_entropy"] for s in entropy_data["step_entropies"] if s.get("predictive_entropy") is not None])
+        print(f'  Avg step entropy: {avg_step_entropy:.4f}')
+    
+    # Save entropy data in debug mode too
+    import json
+    import os
+    debug_output_dir = os.path.join(args.path, "benchmark/LLaMA/logs/debug")
+    os.makedirs(debug_output_dir, exist_ok=True)
+    entropy_file = os.path.join(debug_output_dir, f"debug-{random_indices}_entropy.json")
+    with open(entropy_file, 'w') as f:
+        json.dump({
+            'qid': f"debug-{random_indices}",
+            'question': test_q,
+            'answer': agent.answer,
+            'ground_truth': test_a,
+            'correct': agent.is_correct(),
+            **entropy_data
+        }, f, indent=2)
+    print(f'\nEntropy data saved to: {entropy_file}')
 else:
     # Create output directory
     os.makedirs(args.output_dir, exist_ok=True)
@@ -133,7 +202,13 @@ else:
         indices = [args.debug_id] if args.debug_id < len(contents) else [0]
         print(f"DEBUG MODE: Processing only question {args.debug_id}")
     else:
-        indices = range(len(contents))
+        # Limit to max_questions if specified
+        if args.max_questions is not None:
+            indices = range(min(args.max_questions, len(contents)))
+            print(f"Processing first {len(indices)} questions (max_questions={args.max_questions})")
+        else:
+            indices = range(len(contents))
+            print(f"Processing all {len(contents)} questions")
     
     for i in indices:
         qid = contents[i]['qid']
@@ -151,10 +226,17 @@ else:
                           preloaded_pipe=pipe, preloaded_tokenizer=tokenizer)
         
         try:
+            print("Running agent...")
+            import sys
+            sys.stdout.flush()  # Force output to appear immediately
             agent.run()
+            print("Agent finished. Computing entropy...")
+            sys.stdout.flush()
             
             # Compute final answer entropy
             entropy_data = agent.compute_final_answer_entropy(n_samples=10, temperature=0.8)
+            print("Entropy computation finished.")
+            sys.stdout.flush()
             
             print(f'\nAnswer: {agent.answer}')
             print(f'Ground Truth: {agent.key}')
