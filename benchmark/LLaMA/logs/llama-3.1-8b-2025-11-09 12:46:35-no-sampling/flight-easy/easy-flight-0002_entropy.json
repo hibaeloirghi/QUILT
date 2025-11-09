@@ -1,0 +1,7295 @@
+{
+  "qid": "easy-flight-0002",
+  "question": "What was the departure time of the DL5172 flight from SBN to ATL on 2022-01-03?",
+  "answer": "1233",
+  "ground_truth": "12:33",
+  "correct": true,
+  "tool_calls": [],
+  "tool_entropies": [],
+  "answer_samples": [
+    "1233",
+    "1233",
+    "1233",
+    "1233",
+    "Answer is CORRECT",
+    "1233",
+    "1233",
+    "1233",
+    "Answer is CORRECT",
+    "1233"
+  ],
+  "answer_logprobs": [
+    [
+      {
+        "token": "123",
+        "logprob": -0.08503485471010208,
+        "prob": 0.9184802770614624
+      },
+      {
+        "token": "3",
+        "logprob": 0.0,
+        "prob": 1.0
+      }
+    ],
+    [
+      {
+        "token": "123",
+        "logprob": -0.08503485471010208,
+        "prob": 0.9184802770614624
+      },
+      {
+        "token": "3",
+        "logprob": 0.0,
+        "prob": 1.0
+      }
+    ],
+    [
+      {
+        "token": "123",
+        "logprob": -0.08503485471010208,
+        "prob": 0.9184802770614624
+      },
+      {
+        "token": "3",
+        "logprob": 0.0,
+        "prob": 1.0
+      }
+    ],
+    [
+      {
+        "token": "123",
+        "logprob": -0.08503485471010208,
+        "prob": 0.9184802770614624
+      },
+      {
+        "token": "3",
+        "logprob": 0.0,
+        "prob": 1.0
+      }
+    ],
+    [
+      {
+        "token": "Answer",
+        "logprob": -2.5069098472595215,
+        "prob": 0.08151975274085999
+      },
+      {
+        "token": " is",
+        "logprob": -0.10564044117927551,
+        "prob": 0.8997481465339661
+      },
+      {
+        "token": " COR",
+        "logprob": 0.0,
+        "prob": 1.0
+      },
+      {
+        "token": "RECT",
+        "logprob": 0.0,
+        "prob": 1.0
+      }
+    ],
+    [
+      {
+        "token": "123",
+        "logprob": -0.08503485471010208,
+        "prob": 0.9184802770614624
+      },
+      {
+        "token": "3",
+        "logprob": 0.0,
+        "prob": 1.0
+      }
+    ],
+    [
+      {
+        "token": "123",
+        "logprob": -0.08503485471010208,
+        "prob": 0.9184802770614624
+      },
+      {
+        "token": "3",
+        "logprob": 0.0,
+        "prob": 1.0
+      }
+    ],
+    [
+      {
+        "token": "123",
+        "logprob": -0.08503485471010208,
+        "prob": 0.9184802770614624
+      },
+      {
+        "token": "3",
+        "logprob": 0.0,
+        "prob": 1.0
+      }
+    ],
+    [
+      {
+        "token": "Answer",
+        "logprob": -2.5069098472595215,
+        "prob": 0.08151975274085999
+      },
+      {
+        "token": " is",
+        "logprob": -0.10564044117927551,
+        "prob": 0.8997481465339661
+      },
+      {
+        "token": " COR",
+        "logprob": 0.0,
+        "prob": 1.0
+      },
+      {
+        "token": "RECT",
+        "logprob": 0.0,
+        "prob": 1.0
+      }
+    ],
+    [
+      {
+        "token": "123",
+        "logprob": -0.08503485471010208,
+        "prob": 0.9184802770614624
+      },
+      {
+        "token": "3",
+        "logprob": 0.0,
+        "prob": 1.0
+      }
+    ]
+  ],
+  "predictive_entropy": 0.590537941455841,
+  "semantic_entropy": 0.5004024233381879,
+  "sta_predictive": 0.590537941455841,
+  "sta_semantic": 0.5004024233381879,
+  "step_entropies": [
+    {
+      "step": 1,
+      "type": "thought",
+      "text": "This is a question related to flights",
+      "predictive_entropy": 0.09361176192760468,
+      "logprobs": [
+        {
+          "token": " This",
+          "logprob": -0.09361176192760468,
+          "prob": 0.9106362462043762
+        },
+        {
+          "token": " is",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " a",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " question",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " related",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " flights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " flights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " database",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "1",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "fl",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "1",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " have",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " successfully",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " loaded",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " flights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " database",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " including",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " following",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " columns",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Date",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Air",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Origin",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dest",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Cancel",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "led",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Div",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ert",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ed",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " CR",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "SD",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Minutes",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Arr",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Arr",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Minutes",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Air",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " CR",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "SE",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "l",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "apsed",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Actual",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ElapsedTime",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Distance",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Year",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Quarter",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "type": "action",
+      "text": "LoadDB[flights]",
+      "predictive_entropy": 0.39846813678741455,
+      "logprobs": [
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "fl",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "1",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " have",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " successfully",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " loaded",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " flights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " database",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": -0.39846813678741455,
+          "prob": 0.6713476777076721
+        },
+        {
+          "token": " including",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " following",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " columns",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Date",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Air",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Origin",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dest",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Cancel",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "led",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Div",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ert",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ed",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " CR",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "SD",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Minutes",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Arr",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Arr",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Minutes",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Air",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " CR",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "SE",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "l",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "apsed",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Actual",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ElapsedTime",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Distance",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Year",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Quarter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Month",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Day",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "of",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Month",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Day",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "OfWeek",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Marketing",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_A",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ir",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_N",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "etwork",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Oper",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ated",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_or",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "type": "thought",
+      "text": "We need to filter the information related to the q",
+      "predictive_entropy": 4.264819363877177,
+      "logprobs": [
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " filter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " information",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " related",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " query",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": -0.25192904472351074,
+          "prob": 0.7772998809814453
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Filter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_Number",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_M",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ark",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "eting",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_A",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ir",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "517",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Date",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "202",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "-",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "01",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "-",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "03",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Origin",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=S",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "BN",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dest",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "AT",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "L",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " have",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " successfully",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " filtered",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " data",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " (",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "1",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " row",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ").\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Thought",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " then",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " know",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " departure",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Dep",
+          "logprob": -0.21483024954795837,
+          "prob": 0.8066783547401428
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "8",
+          "logprob": -3.163822650909424,
+          "prob": 0.04226387292146683
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "00",
+          "logprob": -1.1977219581604004,
+          "prob": 0.3018811047077179
+        },
+        {
+          "token": " AM",
+          "logprob": -0.503143310546875,
+          "prob": 0.6046271324157715
+        },
+        {
+          "token": "\n",
+          "logprob": -0.06640665978193283,
+          "prob": 0.9357502460479736
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "type": "action",
+      "text": "FilterDB[Flight_Number_Marketing_Airline=5172, FlightDate=2022-01-03, Origin=SBN, Dest=ATL]",
+      "predictive_entropy": 9.733457192778587,
+      "logprobs": [
+        {
+          "token": " Filter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_Number",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_M",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ark",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "eting",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_A",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ir",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "517",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Date",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "202",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "-",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "01",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "-",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "03",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Origin",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=S",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "BN",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dest",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "AT",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "L",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " have",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " successfully",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " filtered",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " data",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " (",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "1",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " row",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ").\n",
+          "logprob": -0.1550164520740509,
+          "prob": 0.8564010858535767
+        },
+        {
+          "token": "Thought",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " then",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " know",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " departure",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": -0.09361176192760468,
+          "prob": 0.9106362462043762
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Dep",
+          "logprob": -0.2148294746875763,
+          "prob": 0.8066790103912354
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "14",
+          "logprob": -3.875237464904785,
+          "prob": 0.02074940875172615
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "25",
+          "logprob": -3.1409730911254883,
+          "prob": 0.04324069991707802
+        },
+        {
+          "token": ":",
+          "logprob": -2.253788948059082,
+          "prob": 0.10500063002109528
+        },
+        {
+          "token": "00",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "type": "thought",
+      "text": "We then need to know the departure time.",
+      "predictive_entropy": 7.480194275081158,
+      "logprobs": [
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " then",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " know",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " departure",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": -0.11093226820230484,
+          "prob": 0.8949993848800659
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Dep",
+          "logprob": -0.18270468711853027,
+          "prob": 0.8330141305923462
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "12",
+          "logprob": -3.639688730239868,
+          "prob": 0.026260515674948692
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "00",
+          "logprob": -1.9683219194412231,
+          "prob": 0.1396910697221756
+        },
+        {
+          "token": " PM",
+          "logprob": -0.26844799518585205,
+          "prob": 0.7645652294158936
+        },
+        {
+          "token": "\n",
+          "logprob": -0.06640665978193283,
+          "prob": 0.9357502460479736
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "type": "action",
+      "text": "GetValue[DepTime]",
+      "predictive_entropy": 9.553412839770317,
+      "logprobs": [
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Dep",
+          "logprob": -0.18270468711853027,
+          "prob": 0.8330141305923462
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "11",
+          "logprob": -3.781960964202881,
+          "prob": 0.0227779820561409
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "19",
+          "logprob": -4.462560176849365,
+          "prob": 0.01153279934078455
+        },
+        {
+          "token": " PM",
+          "logprob": -1.0867893695831299,
+          "prob": 0.3372977077960968
+        },
+        {
+          "token": "\n",
+          "logprob": -0.03939764201641083,
+          "prob": 0.9613683223724365
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "type": "thought",
+      "text": "We then need to know the departure time.",
+      "predictive_entropy": 11.692205659672618,
+      "logprobs": [
+        {
+          "token": " We",
+          "logprob": -0.6931471824645996,
+          "prob": 0.5
+        },
+        {
+          "token": " then",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " know",
+          "logprob": -0.1550164520740509,
+          "prob": 0.8564010858535767
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " departure",
+          "logprob": -0.09989411383867264,
+          "prob": 0.9049332737922668
+        },
+        {
+          "token": " time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": -2.253788948059082,
+          "prob": 0.10500063002109528
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "4",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Calculate",
+          "logprob": -0.8875788450241089,
+          "prob": 0.41165122389793396
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": -0.6556605100631714,
+          "prob": 0.5190990567207336
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "4",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": -0.1312529444694519,
+          "prob": 0.8769959211349487
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "type": "action",
+      "text": "Finish[1233]```",
+      "predictive_entropy": 18.699404813349247,
+      "logprobs": [
+        {
+          "token": " Finish",
+          "logprob": -0.5304354429244995,
+          "prob": 0.5883487462997437
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]",
+          "logprob": -1.6242679357528687,
+          "prob": 0.1970558762550354
+        },
+        {
+          "token": "``",
+          "logprob": -0.6855881810188293,
+          "prob": 0.5037938356399536
+        },
+        {
+          "token": "`\n\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "###",
+          "logprob": -2.8727006912231445,
+          "prob": 0.056546006351709366
+        },
+        {
+          "token": " Step",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "1",
+          "logprob": -1.989715337753296,
+          "prob": 0.13673433661460876
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Initialize",
+          "logprob": -2.4800612926483154,
+          "prob": 0.08373809605836868
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " agenda",
+          "logprob": -4.076136589050293,
+          "prob": 0.016972912475466728
+        },
+        {
+          "token": " and",
+          "logprob": -0.412239670753479,
+          "prob": 0.6621655225753784
+        },
+        {
+          "token": " DB",
+          "logprob": -3.917327404022217,
+          "prob": 0.0198941919952631
+        },
+        {
+          "token": "LP",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": -0.11093226820230484,
+          "prob": 0.8949993848800659
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "type": "thought",
+      "text": "The question is asking some basic information of a flight",
+      "predictive_entropy": 13.924565388262272,
+      "logprobs": [
+        {
+          "token": " The",
+          "logprob": -1.6862671375274658,
+          "prob": 0.18520958721637726
+        },
+        {
+          "token": " question",
+          "logprob": -3.3668365478515625,
+          "prob": 0.03449860215187073
+        },
+        {
+          "token": " is",
+          "logprob": -0.14003513753414154,
+          "prob": 0.86932772397995
+        },
+        {
+          "token": " asking",
+          "logprob": -0.03939764201641083,
+          "prob": 0.9613683223724365
+        },
+        {
+          "token": " some",
+          "logprob": -2.9824955463409424,
+          "prob": 0.050666239112615585
+        },
+        {
+          "token": " basic",
+          "logprob": -0.5607599020004272,
+          "prob": 0.5707751512527466
+        },
+        {
+          "token": " information",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " of",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " a",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": -0.6078420877456665,
+          "prob": 0.544524610042572
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " flights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " database",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "5",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "fl",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "5",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " have",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " successfully",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " loaded",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " flights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " database",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " including",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " following",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " columns",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Date",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Air",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Origin",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dest",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Cancel",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "led",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Div",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ert",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ed",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " CR",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "SD",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Minutes",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Arr",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Arr",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Minutes",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Air",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " CR",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "SE",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "l",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "apsed",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Actual",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ElapsedTime",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Distance",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "type": "action",
+      "text": "LoadDB[flights]",
+      "predictive_entropy": 0.1312527358531952,
+      "logprobs": [
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "fl",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "5",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": -0.1312527358531952,
+          "prob": 0.8769960999488831
+        },
+        {
+          "token": " have",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " successfully",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " loaded",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " flights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " database",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " including",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " following",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " columns",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Date",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Air",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Origin",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dest",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Cancel",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "led",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Div",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ert",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ed",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " CR",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "SD",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Minutes",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Arr",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Arr",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Minutes",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Air",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " CR",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "SE",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "l",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "apsed",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Actual",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ElapsedTime",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Distance",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Year",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Quarter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Month",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Day",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "of",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Month",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Day",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "OfWeek",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Marketing",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_A",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ir",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_N",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "etwork",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Oper",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ated",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_or",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "type": "thought",
+      "text": "We need to filter the information related to the query",
+      "predictive_entropy": 2.064880038797855,
+      "logprobs": [
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " filter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " information",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " related",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " query",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": -0.6931471824645996,
+          "prob": 0.5
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "type": "action",
+      "text": "FilterDB[Flight_Number_Marketing_Airline=5172, FlightDate=2022-01-03, Origin=SBN, Dest=ATL]",
+      "predictive_entropy": 0.44956429302692413,
+      "logprobs": [
+        {
+          "token": " Filter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_Number",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_M",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ark",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "eting",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_A",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ir",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "517",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Date",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "202",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "-",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "01",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "-",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "03",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Origin",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=S",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "BN",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dest",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "AT",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "L",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "6",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " have",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " successfully",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " filtered",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " data",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " (",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "1",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " rows",
+          "logprob": -0.2945476472377777,
+          "prob": 0.7448684573173523
+        },
+        {
+          "token": ").\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Thought",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "7",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " then",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " know",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " departure",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": -0.15501664578914642,
+          "prob": 0.8564009666442871
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "type": "thought",
+      "text": "We then need to know the departure time.",
+      "predictive_entropy": 0.565349031984806,
+      "logprobs": [
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " then",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " know",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " departure",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": -1.9407298564910889,
+          "prob": 0.14359910786151886
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "7",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Dep",
+          "logprob": -0.1550164520740509,
+          "prob": 0.8564010858535767
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "7",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": -0.11093226820230484,
+          "prob": 0.8949993848800659
+        },
+        {
+          "token": "0",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "type": "action",
+      "text": "GetValue[DepTime]",
+      "predictive_entropy": 0.26594872027635574,
+      "logprobs": [
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Dep",
+          "logprob": -0.1550164520740509,
+          "prob": 0.8564010858535767
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "7",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": -0.11093226820230484,
+          "prob": 0.8949993848800659
+        },
+        {
+          "token": "0",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 8,
+      "type": "thought",
+      "text": "We then need to know the departure time.",
+      "predictive_entropy": 5.033640390634536,
+      "logprobs": [
+        {
+          "token": " We",
+          "logprob": -0.2945472002029419,
+          "prob": 0.744868814945221
+        },
+        {
+          "token": " then",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " know",
+          "logprob": -0.07888974994421005,
+          "prob": 0.9241418242454529
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " departure",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": -0.07888974994421005,
+          "prob": 0.9241418242454529
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "8",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Finish",
+          "logprob": -0.1312529444694519,
+          "prob": 0.8769959211349487
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": -0.9574288129806519,
+          "prob": 0.3838786482810974
+        },
+        {
+          "token": "``",
+          "logprob": -0.43032652139663696,
+          "prob": 0.6502967476844788
+        },
+        {
+          "token": "`\n",
+          "logprob": -0.1312529444694519,
+          "prob": 0.8769959211349487
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "8",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Invalid",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Valid",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Actions",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " are",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Calculate",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " [<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Formula",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Retrieve",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Ag",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "enda",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Content",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Retrieve",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Sc",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ire",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "x",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Content",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Filter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Condition",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " <",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Condition",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "...",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Column",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Ne",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ighbour",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Check",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " <",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Node",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Node",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Check",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " <",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Node",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 8,
+      "type": "action",
+      "text": "Calculate[1233]",
+      "predictive_entropy": 3.7881035208702087,
+      "logprobs": [
+        {
+          "token": " Calculate",
+          "logprob": -2.253788948059082,
+          "prob": 0.10500063002109528
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": -0.1683385968208313,
+          "prob": 0.8450676798820496
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "8",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": -1.3659759759902954,
+          "prob": 0.2551315724849701
+        },
+        {
+          "token": "0",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 9,
+      "type": "thought",
+      "text": "The question is asking some basic information of a flight",
+      "predictive_entropy": 1.705638015270233,
+      "logprobs": [
+        {
+          "token": " The",
+          "logprob": -0.6623390316963196,
+          "prob": 0.515643835067749
+        },
+        {
+          "token": " question",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " is",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " asking",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " some",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " basic",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " information",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " of",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " a",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 9,
+      "type": "action",
+      "text": "LoadDB[flights]",
+      "predictive_entropy": -0.0,
+      "logprobs": [
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "fl",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "9",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " have",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " successfully",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " loaded",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " flights",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " database",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " including",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " following",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " columns",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Date",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Air",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Origin",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dest",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Cancel",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "led",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Div",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ert",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ed",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " CR",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "SD",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Minutes",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Arr",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Arr",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Delay",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Minutes",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Air",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " CR",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "SE",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "l",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "apsed",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Actual",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ElapsedTime",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Distance",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Year",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Quarter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Month",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Day",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "of",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Month",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Day",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "OfWeek",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Marketing",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_A",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ir",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_N",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "etwork",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Oper",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ated",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_or",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 10,
+      "type": "thought",
+      "text": "We need to filter the information related to the query",
+      "predictive_entropy": -0.0,
+      "logprobs": [
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " filter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " information",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " related",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " query",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 10,
+      "type": "action",
+      "text": "FilterDB[Flight_Number_Marketing_Airline=5172, FlightDate=2022-01-03, Origin=SBN, Dest=ATL]",
+      "predictive_entropy": 0.1550164520740509,
+      "logprobs": [
+        {
+          "token": " Filter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_Number",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_M",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ark",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "eting",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "_A",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ir",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "line",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "517",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Flight",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Date",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "202",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "-",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "01",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "-",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "03",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Origin",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=S",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "BN",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ",",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Dest",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "=",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "AT",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "L",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "10",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " have",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " successfully",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " filtered",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " data",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " (",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "1",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " rows",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ").\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Thought",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "11",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " then",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " know",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " departure",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": -0.1550164520740509,
+          "prob": 0.8564010858535767
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "11",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "11",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "0",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 11,
+      "type": "thought",
+      "text": "We then need to know the departure time.",
+      "predictive_entropy": 0.1550164520740509,
+      "logprobs": [
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " then",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " know",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " departure",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": -0.1550164520740509,
+          "prob": 0.8564010858535767
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "11",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "11",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "0",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 11,
+      "type": "action",
+      "text": "GetValue[DepTime]",
+      "predictive_entropy": -0.0,
+      "logprobs": [
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Dep",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Observ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "11",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "0",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 12,
+      "type": "thought",
+      "text": "We then need to know the departure time.",
+      "predictive_entropy": 1.8197402477264404,
+      "logprobs": [
+        {
+          "token": " We",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " then",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " need",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " to",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " know",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " the",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " departure",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " time",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".\n",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "12",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Finish",
+          "logprob": -0.1550164520740509,
+          "prob": 0.8564010858535767
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": -0.5798169374465942,
+          "prob": 0.5600008368492126
+        },
+        {
+          "token": "Observ",
+          "logprob": -0.21483024954795837,
+          "prob": 0.8066783547401428
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "12",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Invalid",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Valid",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Actions",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " are",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Calculate",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": -1.5019290447235107,
+          "prob": 0.22270016372203827
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Formula",
+          "logprob": -0.1312527358531952,
+          "prob": 0.8769960999488831
+        },
+        {
+          "token": ">",
+          "logprob": -0.25192904472351074,
+          "prob": 0.7772998809814453
+        },
+        {
+          "token": "],",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Retrieve",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Ag",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "enda",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Content",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "],",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Retrieve",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Sc",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ire",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "x",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Content",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "],",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "],",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Filter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Condition",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " <",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Condition",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "...",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "],",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Column",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "],",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "],",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Ne",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ighbour",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Check",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " <",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Node",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "],",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Node",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Check",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    },
+    {
+      "step": 12,
+      "type": "action",
+      "text": "Finish[1233]",
+      "predictive_entropy": 1.2636994421482086,
+      "logprobs": [
+        {
+          "token": " Finish",
+          "logprob": -0.1550164520740509,
+          "prob": 0.8564010858535767
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "123",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "3",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]\n",
+          "logprob": -0.6419240832328796,
+          "prob": 0.5262788534164429
+        },
+        {
+          "token": "Observ",
+          "logprob": -0.25192904472351074,
+          "prob": 0.7772998809814453
+        },
+        {
+          "token": "ation",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " ",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "12",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ":",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Invalid",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Action",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ".",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Valid",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Actions",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " are",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Calculate",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " [<",
+          "logprob": -0.21482986211776733,
+          "prob": 0.8066786527633667
+        },
+        {
+          "token": "Formula",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Retrieve",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Ag",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "enda",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Content",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Retrieve",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Sc",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ire",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "x",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Content",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Filter",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "DB",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Condition",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " <",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Condition",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "...",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " GetValue",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Column",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Load",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Ne",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "ighbour",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Check",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " <",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Node",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Node",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Check",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " <",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Node",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">]",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " Edge",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Check",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "[",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "<",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Graph",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Name",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " <",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Node",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "1",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": ">,",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": " <",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "Node",
+          "logprob": 0.0,
+          "prob": 1.0
+        },
+        {
+          "token": "2",
+          "logprob": 0.0,
+          "prob": 1.0
+        }
+      ]
+    }
+  ],
+  "fewshot_examples": 8,
+  "action_samples": [
+    {
+      "step": 1,
+      "samples": [
+        {
+          "index": 0,
+          "text": "LoadDB[flights]",
+          "entropy": 0.39846813678741455,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": 0.39846813678741455
+    },
+    {
+      "step": 2,
+      "samples": [
+        {
+          "index": 0,
+          "text": "FilterDB[Flight_Number_Marketing_Airline=5172, FlightDate=2022-01-03, Origin=SBN, Dest=ATL]",
+          "entropy": 9.733457192778587,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": 9.733457192778587
+    },
+    {
+      "step": 3,
+      "samples": [
+        {
+          "index": 0,
+          "text": "GetValue[DepTime]",
+          "entropy": 9.553412839770317,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": 9.553412839770317
+    },
+    {
+      "step": 4,
+      "samples": [
+        {
+          "index": 0,
+          "text": "Finish[1233]```",
+          "entropy": 18.699404813349247,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": 18.699404813349247
+    },
+    {
+      "step": 5,
+      "samples": [
+        {
+          "index": 0,
+          "text": "LoadDB[flights]",
+          "entropy": 0.1312527358531952,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": 0.1312527358531952
+    },
+    {
+      "step": 6,
+      "samples": [
+        {
+          "index": 0,
+          "text": "FilterDB[Flight_Number_Marketing_Airline=5172, FlightDate=2022-01-03, Origin=SBN, Dest=ATL]",
+          "entropy": 0.44956429302692413,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": 0.44956429302692413
+    },
+    {
+      "step": 7,
+      "samples": [
+        {
+          "index": 0,
+          "text": "GetValue[DepTime]",
+          "entropy": 0.26594872027635574,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": 0.26594872027635574
+    },
+    {
+      "step": 8,
+      "samples": [
+        {
+          "index": 0,
+          "text": "Calculate[1233]",
+          "entropy": 3.7881035208702087,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": 3.7881035208702087
+    },
+    {
+      "step": 9,
+      "samples": [
+        {
+          "index": 0,
+          "text": "LoadDB[flights]",
+          "entropy": -0.0,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": -0.0
+    },
+    {
+      "step": 10,
+      "samples": [
+        {
+          "index": 0,
+          "text": "FilterDB[Flight_Number_Marketing_Airline=5172, FlightDate=2022-01-03, Origin=SBN, Dest=ATL]",
+          "entropy": 0.1550164520740509,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": 0.1550164520740509
+    },
+    {
+      "step": 11,
+      "samples": [
+        {
+          "index": 0,
+          "text": "GetValue[DepTime]",
+          "entropy": -0.0,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": -0.0
+    },
+    {
+      "step": 12,
+      "samples": [
+        {
+          "index": 0,
+          "text": "Finish[1233]",
+          "entropy": 1.2636994421482086,
+          "selected": true
+        }
+      ],
+      "selected_index": 0,
+      "selected_entropy": 1.2636994421482086
+    }
+  ]
+}

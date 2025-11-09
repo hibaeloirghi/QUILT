@@ -344,6 +344,17 @@ BEGIN TRIAL {qid}
                     'correct': agent.is_correct(),
                     **entropy_data
                 }, f, indent=2)
+            
+            # Append agent to list before cleanup
+            agents.append(agent)
+            
+            # Clear memory between questions to prevent OOM
+            import gc
+            import torch
+            del agent
+            gc.collect()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
                 
         except Exception as e:
             print(f'Error when computing answer for {qid}: {e}')
@@ -382,15 +393,16 @@ BEGIN TRIAL {qid}
                 f.write(log)
             
             unanswered_questions.append(qid)
-        
-        agents.append(agent)
-        
-        # Clean up GPU memory between questions to prevent OOM # kept running into this problemo
-        try:
+            
+            # Clear memory even on error
+            import gc
             import torch
-            torch.cuda.empty_cache()
-        except:
-            pass
+            if 'agent' in locals():
+                del agent
+            gc.collect()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+            continue
     
     # Summary
     correct, incorrect, halted = summarize_react_trial(agents)

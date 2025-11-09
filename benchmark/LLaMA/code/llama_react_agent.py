@@ -741,6 +741,8 @@ class ReactAgent:
             action_type, argument = parse_action(action_clean)
             
             if action_type == 'Finish':
+                # Reset invalid action count on valid finish
+                self.invalid_action_count = 0
                 self.answer = argument
                 if self.is_correct():
                     self.scratchpad += 'Answer is CORRECT'
@@ -752,6 +754,7 @@ class ReactAgent:
                 return
 
             elif action_type == 'Calculate':
+                self.invalid_action_count = 0  # Reset on valid action
                 try:
                     self.scratchpad += str(calculator.WolframAlphaCalculator(argument)).strip('\n').strip()
                 except Exception as e:
@@ -789,6 +792,7 @@ class ReactAgent:
                     self.log_tool_entropy('RetrieveScirex', None, None)
             
             elif action_type == 'LoadDB':
+                self.invalid_action_count = 0  # Reset on valid action
                 try:
                     result = self.table_toolkits.db_loader(argument)
                     self.scratchpad += self._truncate_observation(result, max_tokens=50000)
@@ -799,6 +803,7 @@ class ReactAgent:
                         self.scratchpad += f'The database you want to query in not in the list. Please change another database for query.'
             
             elif action_type == 'FilterDB':
+                self.invalid_action_count = 0  # Reset on valid action
                 try:
                     result = self.table_toolkits.data_filter(argument)
                     self.scratchpad += self._truncate_observation(result, max_tokens=50000)
@@ -810,6 +815,7 @@ class ReactAgent:
                         self.scratchpad += f'There is something wrong with the arguments you send for filtering. Please modify it.'
             
             elif action_type == 'GetValue':
+                self.invalid_action_count = 0  # Reset on valid action
                 try:
                     result = self.table_toolkits.get_value(argument)
                     self.scratchpad += self._truncate_observation(result, max_tokens=50000)
@@ -881,6 +887,15 @@ class ReactAgent:
                     self.scratchpad += f"An error occurred: {e}"
                     
             else:
+                self.invalid_action_count += 1
+                # If we've had too many consecutive invalid actions, force finish to break the loop
+                if self.invalid_action_count >= 3:
+                    self.scratchpad += f'Too many invalid actions. Forcing finish with last valid observation.'
+                    self.answer = "Unable to determine answer due to repeated invalid actions."
+                    self.finished = True
+                    self.step_n += 1
+                    print(self.scratchpad.split('\n')[-1])
+                    return
                 self.scratchpad += 'Invalid Action. Valid Actions are Calculate [<Formula>] RetrieveAgenda[<Content>] RetrieveScirex[<Content>] LoadDB[<DBName>] FilterDB[<Condition>, <Condition>, ...] GetValue[<Column>] LoadGraph[<GraphName>] NeighbourCheck[<GraphName>, <Node>] NodeCheck[<GraphName>, <Node>] EdgeCheck[<GraphName>, <Node1>, <Node2>] SQLInterpreter[<SQLCommand>] PythonInterpreter[<PythonCode>] and Finish[<answer>].'
 
         print(self.scratchpad.split('\n')[-1])
@@ -982,6 +997,8 @@ class ReactAgent:
         self.finished = False
         self.scratchpad: str = ''
         self.retry_counts = {}  # Reset retry counts
+        self.recent_actions = []  # Track recent actions to detect loops
+        self.invalid_action_count = 0  # Count consecutive invalid actions
 
     def set_qa(self, question: str, key: str) -> None:
         self.question = question
