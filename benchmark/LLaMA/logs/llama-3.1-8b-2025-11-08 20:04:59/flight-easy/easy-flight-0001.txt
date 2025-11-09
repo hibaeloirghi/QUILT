@@ -1,6 +1,6 @@
 
 ########################################
-BEGIN TRIAL easy-flight-0002
+BEGIN TRIAL easy-flight-0001
 #######################################
 Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be 13 types: 
 (1) Calculate[formula], which calculates the formula and returns the result.
@@ -17,24 +17,24 @@ Solve a question answering task with interleaving Thought, Action, Observation s
 (12) PythonInterpreter[Python], which interprets the Python code Python and returns the result.
 (13) Finish[answer], which returns the answer and finishes the task.
 You may take as many steps as necessary.
-Question: What was the departure time of the DL5172 flight from SBN to ATL on 2022-01-03?
+Question: What was the departure time of the AA4869 flight from HHH to CLT on 2022-05-06?
 Thought 1: This is a question related to flights
 Action 1: LoadDB[flights]
 Observation 1: We have successfully loaded the flights database, including the following columns: FlightDate, Airline, Origin, Dest, Cancelled, Diverted, CRSDepTime, DepTime, DepDelayMinutes, DepDelay, ArrTime, ArrDelayMinutes, AirTime, CRSElapsedTime, ActualElapsedTime, Distance, Year, Quarter, Month, DayofMonth, DayOfWeek, Marketing_Airline_Network, Operated_or_Branded_Code_Share_Partners, DOT_ID_Marketing_Airline, IATA_Code_Marketing_Airline, Flight_Number_Marketing_Airline, Operating_Airline, DOT_ID_Operating_Airline, IATA_Code_Operating_Airline, Tail_Number, Flight_Number_Operating_Airline, OriginAirportID, OriginAirportSeqID, OriginCityMarketID, OriginCityName, OriginState, OriginStateFips, OriginStateName, OriginWac, DestAirportID, DestAirportSeqID, DestCityMarketID, DestCityName, DestState, DestStateFips, DestStateName, DestWac, DepDel15, DepartureDelayGroups, DepTimeBlk, TaxiOut, WheelsOff, WheelsOn, TaxiIn, CRSArrTime, ArrDelay, ArrDel15, ArrivalDelayGroups, ArrTimeBlk, DistanceGroup, DivAirportLandings.
 Thought 2: We need to filter the information related to the q
-Action 2: FilterDB[Flight_Number_Marketing_Airline=5172, FlightDate=2022-01-03, Origin=SBN, Dest=ATL]
+Action 2: FilterDB[Flight_Number_Marketing_Airline=4869, FlightDate=2022-05-06, Origin=HHH, Dest=CLT]
 Observation 2: We have successfully filtered the data (1 rows).
 Thought 3: We then need to know the departure time.
 Action 3: GetValue[DepTime]
-Observation 3: 1233.0
-Thought 4: We then need to know the departure time in AM/PM.
-Action 4: Calculate[format_time(1233)]
-Observation 4: Illegal Mathematical Expression. Please try again.
-Thought 5: To compute the departure time in AM/PM, we need to
-Action 5: PythonInterpreter[# solution in Python:
-Observation 5: 0
-Thought 6: After execution of Python Code, we know that the answer is 0.
-Action 6: Finish[0]
-Observation 6: Answer is INCORRECT
-Correct answer: 12:33
+Observation 3: 1216.0
+Thought 4: The departure time of the AA4869 flight from HHH to CLT on 2022-05-06 is 1216.
+Action 4: Finish[1216]```
+Observation 4: Invalid Action. Valid Actions are Calculate [<Formula>] RetrieveAgenda[<Content>] RetrieveScirex[<Content>] LoadDB[<DBName>] FilterDB[<Condition>, <Condition>, ...] GetValue[<Column>] LoadGraph[<GraphName>] NeighbourCheck[<GraphName>, <Node>] NodeCheck[<GraphName>, <Node>] EdgeCheck[<GraphName>, <Node1>, <Node2>] SQLInterpreter[<SQLCommand>] PythonInterpreter[<PythonCode>] and Finish[<answer>].
+Thought 5: Let's use the Calculate Action to get the correct answer.
+Action 5: Calculate[1216]
+Observation 5: Illegal Mathematical Expression. Please try again.
+Thought 6: I made a mistake. Let's use the Finish Action to get the correct answer.
+Action 6: Finish[1216]
+Observation 6: Answer is CORRECT
+Correct answer: 12:16
 

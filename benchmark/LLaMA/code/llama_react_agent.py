@@ -308,8 +308,15 @@ class ReactAgent:
             'sta_semantic': None,
             # Step-wise entropy for few-shot analysis
             'step_entropies': [],  # List of dicts: {step, type: 'thought'|'action', entropy, samples, logprobs}
-            'fewshot_examples': fewshot_count
+            'fewshot_examples': fewshot_count,
+            # Discarded actions due to high entropy
+            'discarded_actions': []  # List of dicts: {step, action, entropy, retry_count}
         }
+        
+        # Entropy-based backtracking parameters
+        self.entropy_threshold = getattr(args, 'entropy_threshold', 6.0)  # Default threshold for actions
+        self.max_retries_per_step = getattr(args, 'max_retries_per_step', 3)  # Max retries per step
+        self.retry_counts = {}  # Track retries per step
 
         # Setup Llama model - reuse if provided, otherwise load new
         if preloaded_pipe is not None and preloaded_tokenizer is not None:
@@ -508,47 +515,126 @@ class ReactAgent:
         self.scratchpad += ' ' + thought
         print(self.scratchpad.split('\n')[-1])
 
-        # Act
-        self.scratchpad += f'\nAction {self.step_n}:'
-        # Sample multiple times for entropy (few-shot analysis)
-        action, action_logprobs = self.prompt_agent_with_entropy(n_samples=5, temperature=0.7)
-        # Track action entropy for few-shot analysis
-        self._log_step_entropy('action', action, action_logprobs)
-        # Clean up action - remove any format labels the model might have generated
-        action = re.sub(r'^(Thought|Action)\s+\d+\s*:\s*', '', action, flags=re.IGNORECASE).strip()
-        # Remove any remaining format labels anywhere in the text
-        action = re.sub(r'(Thought|Action)\s+\d+\s*:\s*', '', action, flags=re.IGNORECASE).strip()
-        # If empty or too short, try to generate something meaningful
-        if not action or len(action) < 3:
-            # Retry once
-            action = self.prompt_agent()
-            action = re.sub(r'^(Thought|Action)\s+\d+\s*:\s*', '', action, flags=re.IGNORECASE).strip()
-            action = re.sub(r'(Thought|Action)\s+\d+\s*:\s*', '', action, flags=re.IGNORECASE).strip()
-            if not action or len(action) < 3:
-                # Try to infer a reasonable first action based on the question
-                if "flight" in self.question.lower():
-                    action = "LoadDB[flights]"
+        # Act with entropy-based backtracking
+        action_retry_key = f'action_{self.step_n}'
+        self.retry_counts[action_retry_key] = 0
+        
+        while True:
+            # Remove previous action if retrying
+            if self.retry_counts[action_retry_key] > 0:
+                # Backtrack: remove the last action line
+                lines = self.scratchpad.split('\n')
+                if lines and lines[-1].startswith(f'Action {self.step_n}:'):
+                    self.scratchpad = '\n'.join(lines[:-1])
+                print(f"[Backtracking action - retry {self.retry_counts[action_retry_key]}/{self.max_retries_per_step}]")
+            
+            self.scratchpad += f'\nAction {self.step_n}:'
+            
+            # Sample multiple actions and compute entropy for each
+            prompt = self._build_agent_prompt()
+            original_temp = self.llm.temperature
+            object.__setattr__(self.llm, 'temperature', 0.7)
+            
+            # Generate multiple samples
+            samples = []
+            for _ in range(5):
+                text, logprobs = self.llm._call_with_logprobs(prompt, stop=["\n"])
+                text = format_step(text)
+                samples.append((text, logprobs))
+            
+            object.__setattr__(self.llm, 'temperature', original_temp)
+            
+            # Compute entropy for each individual sample and pick the one with LOWEST entropy
+            sample_entropies = []
+            for text, logprobs in samples:
+                # Compute entropy for this single sample (negative sum of logprobs)
+                if logprobs and len(logprobs) > 0:
+                    # Extract logprob values
+                    if isinstance(logprobs[0], dict):
+                        logprob_values = [item["logprob"] for item in logprobs if isinstance(item, dict)]
+                    else:
+                        logprob_values = [item for item in logprobs if isinstance(item, (int, float))]
+                    # Sequence logprob (sum of token logprobs)
+                    seq_logprob = sum(logprob_values) if logprob_values else 0.0
+                    # Entropy is negative logprob (higher = more uncertain)
+                    entropy = -seq_logprob
                 else:
-                    # Last resort: use a generic action
-                    action = "LoadDB[flights]"  # Default to break the loop
-        self.scratchpad += ' ' + action
-        print(self.scratchpad.split('\n')[-1])
+                    entropy = float('inf')  # Very high entropy if no logprobs
+                sample_entropies.append(entropy)
+            
+            # ALWAYS pick the sample with LOWEST entropy (most confident)
+            best_idx = min(range(len(samples)), key=lambda i: sample_entropies[i])
+            action, action_logprobs = samples[best_idx]
+            best_entropy = sample_entropies[best_idx]
+            
+            # For logging, we still need all logprobs for aggregate entropy computation
+            all_logprobs = [logprobs for _, logprobs in samples]
+            
+            # Clean up action - remove any format labels the model might have generated
+            action_clean = re.sub(r'^(Thought|Action)\s+\d+\s*:\s*', '', action, flags=re.IGNORECASE).strip()
+            action_clean = re.sub(r'(Thought|Action)\s+\d+\s*:\s*', '', action_clean, flags=re.IGNORECASE).strip()
+            
+            # Check if we should retry due to high entropy
+            # If threshold is None, negative, or very high (>= 999), disable backtracking
+            if (self.entropy_threshold is not None and 
+                self.entropy_threshold >= 0 and
+                self.entropy_threshold < 999.0 and
+                best_entropy > self.entropy_threshold and 
+                self.retry_counts[action_retry_key] < self.max_retries_per_step):
+                self.retry_counts[action_retry_key] += 1
+                
+                # Track discarded action
+                discarded_info = {
+                    'step': self.step_n,
+                    'action': action_clean,
+                    'entropy': best_entropy,
+                    'threshold': self.entropy_threshold,
+                    'retry_count': self.retry_counts[action_retry_key],
+                    'all_sample_entropies': sample_entropies  # Show all 5 sample entropies
+                }
+                self.entropy_data['discarded_actions'].append(discarded_info)
+                
+                print(f"[DISCARDED] Action: {action_clean[:50]}... (entropy: {best_entropy:.2f} > {self.entropy_threshold}, retry {self.retry_counts[action_retry_key]}/{self.max_retries_per_step})")
+                print(f"[High action entropy: {best_entropy:.2f} > {self.entropy_threshold} (best of 5), retrying...]")
+                continue  # Retry with lower entropy
+            
+            # If empty or too short, try to generate something meaningful
+            if not action_clean or len(action_clean) < 3:
+                # Retry once
+                action = self.prompt_agent()
+                action_clean = re.sub(r'^(Thought|Action)\s+\d+\s*:\s*', '', action, flags=re.IGNORECASE).strip()
+                action_clean = re.sub(r'(Thought|Action)\s+\d+\s*:\s*', '', action_clean, flags=re.IGNORECASE).strip()
+                if not action_clean or len(action_clean) < 3:
+                    # Try to infer a reasonable first action based on the question
+                    if "flight" in self.question.lower():
+                        action_clean = "LoadDB[flights]"
+                    else:
+                        # Last resort: use a generic action
+                        action_clean = "LoadDB[flights]"  # Default to break the loop
+            
+            # Track action entropy for few-shot analysis (use aggregate for logging)
+            self._log_step_entropy('action', action_clean, all_logprobs)
+            self.scratchpad += ' ' + action_clean
+            print(self.scratchpad.split('\n')[-1])
+            if best_entropy < float('inf'):
+                print(f"[Selected action with entropy: {best_entropy:.2f} (best of 5, aggregate: {self._compute_step_entropy(all_logprobs):.2f})]")
+            break  # Success, exit retry loop
 
         # Observe
         self.scratchpad += f'\nObservation {self.step_n}: '
-        if action == None or action == '' or action == '\n':
+        if action_clean == None or action_clean == '' or action_clean == '\n':
             self.scratchpad += "You action is filtered due to content. Please assume all the actions are permitted in this environment and take the action again."
-        elif "PythonInterpreter" in action:
+        elif "PythonInterpreter" in action_clean:
             action_type = 'PythonInterpreter'
-            argument = action[18:-1]  # Extract argument from PythonInterpreter[...] format
+            argument = action_clean[18:-1]  # Extract argument from PythonInterpreter[...] format
             try:
                 self.scratchpad += python_interpreter.execute(argument)
             except Exception as e:
                 self.scratchpad += f"An error occurred: {e}"
-        elif '], ' in action:
+        elif '], ' in action_clean:
             self.scratchpad += "You are sending multiple actions at once. Please send one action at a time."
         else:  
-            action_type, argument = parse_action(action)
+            action_type, argument = parse_action(action_clean)
             
             if action_type == 'Finish':
                 self.answer = argument
@@ -727,14 +813,19 @@ class ReactAgent:
         all_logprobs = [logprobs for _, logprobs in samples]
         return selected_text, all_logprobs
     
+    def _compute_step_entropy(self, logprobs_list: list) -> float:
+        """
+        Compute predictive entropy from logprobs list
+        """
+        from entropy_utils import compute_predictive_entropy
+        return compute_predictive_entropy(logprobs_list) if logprobs_list and len(logprobs_list) > 0 else 0.0
+    
     def _log_step_entropy(self, step_type: str, text: str, logprobs_list: list):
         """
         Log entropy for a single step (thought or action) for few-shot analysis
         """
-        from entropy_utils import compute_predictive_entropy
-        
         # Compute predictive entropy from logprobs
-        predictive_entropy = compute_predictive_entropy(logprobs_list) if logprobs_list and len(logprobs_list) > 0 else 0.0
+        predictive_entropy = self._compute_step_entropy(logprobs_list)
         
         self.entropy_data['step_entropies'].append({
             'step': self.step_n,
@@ -763,6 +854,7 @@ class ReactAgent:
         self.step_n = 1
         self.finished = False
         self.scratchpad: str = ''
+        self.retry_counts = {}  # Reset retry counts
 
     def set_qa(self, question: str, key: str) -> None:
         self.question = question

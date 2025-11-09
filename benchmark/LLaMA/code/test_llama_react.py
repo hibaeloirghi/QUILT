@@ -37,6 +37,10 @@ parser.add_argument("--max_steps", type=int, default=20,
                     help="Maximum number of steps for the agent")
 parser.add_argument("--max_questions", type=int, default=None,
                     help="Maximum number of questions to process (None = all)")
+parser.add_argument("--entropy_threshold", type=float, default=6.0,
+                    help="Entropy threshold for action backtracking (higher = less backtracking, set to 999 to disable)")
+parser.add_argument("--max_retries_per_step", type=int, default=3,
+                    help="Maximum number of retries per step when entropy is too high")
 parser.add_argument("--output_dir", type=str, default=None,
                     help="Output directory for logs and results")
 
@@ -158,7 +162,34 @@ if args.debug:
             'correct': agent.is_correct(),
             **entropy_data
         }, f, indent=2)
+    
+    # Also save a .txt log with discarded actions
+    log_file = os.path.join(debug_output_dir, f"debug-{random_indices}.txt")
+    log = f"""
+########################################
+BEGIN TRIAL debug-{random_indices}
+#######################################
+"""
+    log += remove_fewshot(agent._build_agent_prompt()) + f'\nCorrect answer: {test_a}\n\n'
+    
+    # Add discarded actions section if any
+    if entropy_data.get('discarded_actions') and len(entropy_data['discarded_actions']) > 0:
+        log += f'\n{"="*60}\n'
+        log += f'DISCARDED ACTIONS (High Entropy)\n'
+        log += f'{"="*60}\n'
+        for discarded in entropy_data['discarded_actions']:
+            log += f"Step {discarded['step']}, Retry {discarded['retry_count']}:\n"
+            log += f"  Action: {discarded['action']}\n"
+            log += f"  Entropy: {discarded['entropy']:.4f} (threshold: {discarded['threshold']:.2f})\n"
+            log += f"  All sample entropies: {[f'{e:.2f}' for e in discarded['all_sample_entropies']]}\n"
+            log += f"\n"
+        log += f'{"="*60}\n\n'
+    
+    with open(log_file, 'w') as f:
+        f.write(log)
+    
     print(f'\nEntropy data saved to: {entropy_file}')
+    print(f'Log file saved to: {log_file}')
 else:
     # Create output directory
     os.makedirs(args.output_dir, exist_ok=True)
@@ -262,6 +293,20 @@ BEGIN TRIAL {qid}
 #######################################
 """
             log += remove_fewshot(agent._build_agent_prompt()) + f'\nCorrect answer: {agent.key}\n\n'
+            
+            # Add discarded actions section if any
+            if entropy_data.get('discarded_actions') and len(entropy_data['discarded_actions']) > 0:
+                log += f'\n{"="*60}\n'
+                log += f'DISCARDED ACTIONS (High Entropy)\n'
+                log += f'{"="*60}\n'
+                for discarded in entropy_data['discarded_actions']:
+                    log += f"Step {discarded['step']}, Retry {discarded['retry_count']}:\n"
+                    log += f"  Action: {discarded['action']}\n"
+                    log += f"  Entropy: {discarded['entropy']:.4f} (threshold: {discarded['threshold']:.2f})\n"
+                    log += f"  All sample entropies: {[f'{e:.2f}' for e in discarded['all_sample_entropies']]}\n"
+                    log += f"\n"
+                log += f'{"="*60}\n\n'
+            
             log_file = os.path.join(args.output_dir, f"{qid}.txt")
             with open(log_file, 'w') as f:
                 f.write(log)
@@ -293,6 +338,18 @@ BEGIN TRIAL {qid}
 """
             try:
                 log += remove_fewshot(agent._build_agent_prompt()) + f'\nCorrect answer: {agent.key}\n\n'
+                # Add discarded actions if available
+                if hasattr(agent, 'entropy_data') and agent.entropy_data.get('discarded_actions'):
+                    log += f'\n{"="*60}\n'
+                    log += f'DISCARDED ACTIONS (High Entropy)\n'
+                    log += f'{"="*60}\n'
+                    for discarded in agent.entropy_data['discarded_actions']:
+                        log += f"Step {discarded['step']}, Retry {discarded['retry_count']}:\n"
+                        log += f"  Action: {discarded['action']}\n"
+                        log += f"  Entropy: {discarded['entropy']:.4f} (threshold: {discarded['threshold']:.2f})\n"
+                        log += f"  All sample entropies: {[f'{e:.2f}' for e in discarded['all_sample_entropies']]}\n"
+                        log += f"\n"
+                    log += f'{"="*60}\n\n'
             except:
                 log += f'Question: {question}\nCorrect answer: {answer}\n\n'
             log += f'ERROR: {str(e)}\n'

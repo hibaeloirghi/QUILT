@@ -1,0 +1,83 @@
+Job ID: 5722646
+Node: vulcan33
+Started at: Sat Nov  8 20:04:47 EST 2025
+Configuration:
+  ToolQA path: /fs/nexus-scratch/eloirghi/QUILT
+  Dataset: flight
+  Hardness: easy
+  Prompt type: easy
+  Llama model: meta-llama/Meta-Llama-3.1-8B-Instruct
+  Max steps: 20
+  Max questions: 1
+
+=== Running Llama-3.1-8B-Instruct ReAct on ToolQA ===
+
+Running command:
+python benchmark/LLaMA/code/test_llama_react.py --dataset flight --hardness easy --path /fs/nexus-scratch/eloirghi/QUILT --prompt easy --llama_model meta-llama/Meta-Llama-3.1-8B-Instruct --hf_token ***MASKED*** --max_steps 20 --max_questions 1
+
+Loaded 100 questions from /fs/nexus-scratch/eloirghi/QUILT/data/questions/easy/flight-easy.jsonl
+Output directory: /fs/nexus-scratch/eloirghi/QUILT/benchmark/LLaMA/logs/llama-3.1-8b-2025-11-08 20:04:59/flight-easy
+Loading model...
+Model loaded successfully.
+Processing first 1 questions (max_questions=1)
+
+============================================================
+Processing 1/100: easy-flight-0000
+Question: What was the departure time of the AA2319 flight from MIA to LAS on 2022-06-05?
+============================================================
+
+Running agent...
+Thought 1: This is a question related to flights
+Action 1: LoadDB[flights]
+[Selected action with entropy: 0.55 (best of 5, aggregate: 0.76)]
+Observation 1: We have successfully loaded the flights database, including the following columns: FlightDate, Airline, Origin, Dest, Cancelled, Diverted, CRSDepTime, DepTime, DepDelayMinutes, DepDelay, ArrTime, ArrDelayMinutes, AirTime, CRSElapsedTime, ActualElapsedTime, Distance, Year, Quarter, Month, DayofMonth, DayOfWeek, Marketing_Airline_Network, Operated_or_Branded_Code_Share_Partners, DOT_ID_Marketing_Airline, IATA_Code_Marketing_Airline, Flight_Number_Marketing_Airline, Operating_Airline, DOT_ID_Operating_Airline, IATA_Code_Operating_Airline, Tail_Number, Flight_Number_Operating_Airline, OriginAirportID, OriginAirportSeqID, OriginCityMarketID, OriginCityName, OriginState, OriginStateFips, OriginStateName, OriginWac, DestAirportID, DestAirportSeqID, DestCityMarketID, DestCityName, DestState, DestStateFips, DestStateName, DestWac, DepDel15, DepartureDelayGroups, DepTimeBlk, TaxiOut, WheelsOff, WheelsOn, TaxiIn, CRSArrTime, ArrDelay, ArrDel15, ArrivalDelayGroups, ArrTimeBlk, DistanceGroup, DivAirportLandings.
+Thought 2: We need to filter the information related to the query
+Action 2: FilterDB[Flight_Number_Marketing_Airline=2319, FlightDate=2022-06-05, Origin=MIA, Dest=LAS]
+[Selected action with entropy: 0.93 (best of 5, aggregate: 2.95)]
+Observation 2: We have successfully filtered the data (1 rows).
+Thought 3: We then need to know the departure time
+Action 3: GetValue[DepTime]
+[Selected action with entropy: 4.95 (best of 5, aggregate: 7.59)]
+Observation 3: 2143.0
+Thought 4: The departure time of the AA2319 flight from MIA to LAS on 2022-06-05 is 2143.
+Action 4: Finish[2143]
+[Selected action with entropy: 3.77 (best of 5, aggregate: 11.77)]
+Observation 4: Answer is CORRECT
+Agent finished. Computing entropy...
+Sampling 10 answers for entropy computation...
+  Sample 5/10...
+  Sample 10/10...
+Computing entropy metrics...
+Entropy computation finished.
+
+Answer: 2143
+Ground Truth: 21:43
+Correct: True
+
+Entropy Metrics:
+  Predictive H(Y|Z,x): 0.7875
+  Semantic H_c(Y|Z,x): 0.8018
+  Tool H(Z|a): 0.0000
+  STA-P: 0.7875
+  STA-S: 0.8018
+
+Few-Shot Analysis:
+  Few-shot examples: 8
+  Step-wise entropies: 8 steps tracked
+  Avg step entropy: 4.7810
+------------------------------------------------------------
+
+============================================================
+Summary
+============================================================
+Total questions: 1
+Correct: 1 (100.0%)
+Incorrect: 0 (0.0%)
+Halted: 0 (0.0%)
+Unanswered questions: 0
+
+Results saved to: /fs/nexus-scratch/eloirghi/QUILT/benchmark/LLaMA/logs/llama-3.1-8b-2025-11-08 20:04:59/flight-easy
+
+=== Job completed successfully ===
+Results saved to: benchmark/LLaMA/logs/
+Finished at: Sat Nov  8 20:08:17 EST 2025
