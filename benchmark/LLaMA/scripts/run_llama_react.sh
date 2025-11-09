@@ -53,6 +53,8 @@ PROMPT="${3:-easy}"       # easy or hard (prompt type)
 LLAMA_MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct"
 MAX_STEPS=20
 MAX_QUESTIONS="${4:-50}"  # Number of questions to process (default: 50)
+NUM_ACTION_SAMPLES="${5:-5}"  # Number of action samples (default: 5, use 1 for no sampling)
+NUM_ANSWER_SAMPLES="${6:-10}"  # Number of final answer samples for entropy (default: 10, use 0 to disable)
 
 # Optional: WolframAlpha API key for calculator tool
 # WOLFRAMALPHA_API_KEY="your_key_here"
@@ -68,6 +70,8 @@ echo "  Prompt type: $PROMPT"
 echo "  Llama model: $LLAMA_MODEL"
 echo "  Max steps: $MAX_STEPS"
 echo "  Max questions: $MAX_QUESTIONS"
+echo "  Num action samples: $NUM_ACTION_SAMPLES"
+echo "  Num answer samples: $NUM_ANSWER_SAMPLES"
 echo ""
 
 # Check if question file exists
@@ -90,6 +94,8 @@ CMD_ARGS=(
     --hf_token "$HF_TOKEN"
     --max_steps "$MAX_STEPS"
     --max_questions "$MAX_QUESTIONS"
+    --num_action_samples "$NUM_ACTION_SAMPLES"
+    --num_answer_samples "$NUM_ANSWER_SAMPLES"
 )
 
 # Add debug flags if specified (for testing single questions)

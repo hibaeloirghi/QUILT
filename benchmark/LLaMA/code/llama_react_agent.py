@@ -79,10 +79,76 @@ class LlamaLLM(BaseLLM):
         """Call model and return both text and per-token log probabilities"""
         from transformers import StoppingCriteria, StoppingCriteriaList
         
+        # Truncate prompt if it's too long to prevent OOM
+        # Model max context is typically 131072 tokens, but we need room for generation
+        # Use 100K tokens as a safe limit (leaving ~30K for generation)
+        MAX_CONTEXT_TOKENS = 100000
+        
+        # Tokenize to check length
+        input_ids_full = self.tokenizer.encode(prompt, add_special_tokens=False)
+        
+        if len(input_ids_full) > MAX_CONTEXT_TOKENS:
+            # Truncate: keep beginning (few-shot + question) and recent scratchpad
+            # Find where scratchpad starts (after question)
+            # The prompt format is: examples + question + scratchpad
+            # We want to keep examples + question + recent scratchpad
+            
+            # Try to find the scratchpad section
+            # Look for "Thought 1:" or "Action 1:" which typically starts scratchpad
+            scratchpad_markers = ["Thought 1:", "Action 1:", "\nThought", "\nAction"]
+            scratchpad_start = -1
+            for marker in scratchpad_markers:
+                idx = prompt.find(marker)
+                if idx != -1:
+                    scratchpad_start = idx
+                    break
+            
+            if scratchpad_start > 0:
+                # Split into prefix (examples + question) and scratchpad
+                prefix = prompt[:scratchpad_start]
+                scratchpad = prompt[scratchpad_start:]
+                
+                # Tokenize prefix to see how much space we have for scratchpad
+                prefix_ids = self.tokenizer.encode(prefix, add_special_tokens=False)
+                prefix_tokens = len(prefix_ids)
+                
+                # Calculate how many tokens we can use for scratchpad
+                scratchpad_token_budget = MAX_CONTEXT_TOKENS - prefix_tokens - 1000  # 1K buffer
+                
+                if scratchpad_token_budget > 0:
+                    # Truncate scratchpad from the beginning, keep the end
+                    # Tokenize scratchpad in chunks to find where to cut
+                    scratchpad_ids = self.tokenizer.encode(scratchpad, add_special_tokens=False)
+                    
+                    if len(scratchpad_ids) > scratchpad_token_budget:
+                        # Keep the last N tokens of scratchpad
+                        scratchpad_ids_truncated = scratchpad_ids[-scratchpad_token_budget:]
+                        # Decode and add a note that we truncated
+                        scratchpad_truncated = self.tokenizer.decode(scratchpad_ids_truncated, skip_special_tokens=True)
+                        scratchpad_truncated = "... [earlier observations truncated] ...\n" + scratchpad_truncated
+                        prompt = prefix + scratchpad_truncated
+                    else:
+                        # Scratchpad fits, use as is
+                        prompt = prefix + scratchpad
+                else:
+                    # Prefix itself is too long, just truncate the whole thing
+                    # Keep the last MAX_CONTEXT_TOKENS tokens
+                    prompt_ids_truncated = input_ids_full[-MAX_CONTEXT_TOKENS:]
+                    prompt = self.tokenizer.decode(prompt_ids_truncated, skip_special_tokens=True)
+                    prompt = "... [prompt truncated] ...\n" + prompt
+            else:
+                # Can't find scratchpad, just truncate from beginning
+                prompt_ids_truncated = input_ids_full[-MAX_CONTEXT_TOKENS:]
+                prompt = self.tokenizer.decode(prompt_ids_truncated, skip_special_tokens=True)
+                prompt = "... [prompt truncated] ...\n" + prompt
+            
+            # Re-tokenize the truncated prompt
+            input_ids_full = self.tokenizer.encode(prompt, add_special_tokens=False)
+        
         # Don't use chat template - the prompt already has the proper format
         # The ReAct prompt is designed to work without chat formatting
         # Just tokenize the prompt directly
-        input_ids = self.tokenizer.encode(prompt, return_tensors="pt").to(self.model.device)
+        input_ids = torch.tensor([input_ids_full], dtype=torch.long).to(self.model.device)
         
         # Create stopping criteria for stop sequences
         class StopOnTokens(StoppingCriteria):
@@ -309,13 +375,14 @@ class ReactAgent:
             # Step-wise entropy for few-shot analysis
             'step_entropies': [],  # List of dicts: {step, type: 'thought'|'action', entropy, samples, logprobs}
             'fewshot_examples': fewshot_count,
-            # Discarded actions due to high entropy
-            'discarded_actions': []  # List of dicts: {step, action, entropy, retry_count}
+            # Action samples (all samples with selected/discarded info)
+            'action_samples': []  # List of dicts: {step, samples: [{index, text, entropy, selected}], selected_index, selected_entropy}
         }
         
         # Entropy-based backtracking parameters
         self.entropy_threshold = getattr(args, 'entropy_threshold', 6.0)  # Default threshold for actions
         self.max_retries_per_step = getattr(args, 'max_retries_per_step', 3)  # Max retries per step
+        self.num_action_samples = getattr(args, 'num_action_samples', 5)  # Number of samples for entropy selection (default: 5)
         self.retry_counts = {}  # Track retries per step
 
         # Setup Llama model - reuse if provided, otherwise load new
@@ -468,6 +535,49 @@ class ReactAgent:
         
         return self.entropy_data
     
+    def _truncate_observation(self, observation: str, max_tokens: int = 50000) -> str:
+        """
+        Truncate observation if it's too long to prevent memory issues.
+        Keeps the beginning and end of the observation.
+        """
+        if not observation:
+            return observation
+        
+        # Check token count
+        try:
+            token_count = len(self.llm.tokenizer.encode(observation, add_special_tokens=False))
+        except:
+            # Fallback to character-based truncation if tokenizer fails
+            if len(observation) > max_tokens * 4:  # Rough estimate: 4 chars per token
+                # Keep first 20K and last 20K chars
+                keep_chars = max_tokens * 2
+                if len(observation) > keep_chars * 2:
+                    return observation[:keep_chars] + "\n... [middle truncated] ...\n" + observation[-keep_chars:]
+                return observation
+            else:
+                return observation
+        
+        if token_count <= max_tokens:
+            return observation
+        
+        # Truncate: keep first 25K tokens and last 25K tokens
+        keep_tokens = max_tokens // 2
+        observation_ids = self.llm.tokenizer.encode(observation, add_special_tokens=False)
+        
+        if len(observation_ids) > keep_tokens * 2:
+            # Keep beginning and end
+            prefix_ids = observation_ids[:keep_tokens]
+            suffix_ids = observation_ids[-keep_tokens:]
+            
+            prefix = self.llm.tokenizer.decode(prefix_ids, skip_special_tokens=True)
+            suffix = self.llm.tokenizer.decode(suffix_ids, skip_special_tokens=True)
+            
+            return prefix + "\n... [middle truncated to prevent memory issues] ...\n" + suffix
+        else:
+            # Just truncate from end
+            truncated_ids = observation_ids[:max_tokens]
+            return self.llm.tokenizer.decode(truncated_ids, skip_special_tokens=True) + "\n... [truncated]"
+    
     def log_tool_entropy(self, action_type: str, tool_output, tool_scores=None):
         """Log tool entropy for this step"""
         from entropy_utils import compute_tool_entropy
@@ -515,110 +625,103 @@ class ReactAgent:
         self.scratchpad += ' ' + thought
         print(self.scratchpad.split('\n')[-1])
 
-        # Act with entropy-based backtracking
-        action_retry_key = f'action_{self.step_n}'
-        self.retry_counts[action_retry_key] = 0
+        # Act with entropy-based selection (sample multiple, pick best)
+        self.scratchpad += f'\nAction {self.step_n}:'
         
-        while True:
-            # Remove previous action if retrying
-            if self.retry_counts[action_retry_key] > 0:
-                # Backtrack: remove the last action line
-                lines = self.scratchpad.split('\n')
-                if lines and lines[-1].startswith(f'Action {self.step_n}:'):
-                    self.scratchpad = '\n'.join(lines[:-1])
-                print(f"[Backtracking action - retry {self.retry_counts[action_retry_key]}/{self.max_retries_per_step}]")
+        # Sample multiple actions and compute entropy for each
+        prompt = self._build_agent_prompt()
+        original_temp = self.llm.temperature
+        object.__setattr__(self.llm, 'temperature', 0.7)
+        
+        # Generate multiple samples
+        samples = []
+        for _ in range(self.num_action_samples):
+            text, logprobs = self.llm._call_with_logprobs(prompt, stop=["\n"])
+            text = format_step(text)
+            samples.append((text, logprobs))
+            # Clear cache periodically to reduce memory usage
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+        
+        object.__setattr__(self.llm, 'temperature', original_temp)
+        
+        # Compute entropy for each individual sample and pick the one with LOWEST entropy
+        sample_entropies = []
+        sample_texts_clean = []
+        for text, logprobs in samples:
+            # Clean up action text
+            action_text_clean = re.sub(r'^(Thought|Action)\s+\d+\s*:\s*', '', text, flags=re.IGNORECASE).strip()
+            action_text_clean = re.sub(r'(Thought|Action)\s+\d+\s*:\s*', '', action_text_clean, flags=re.IGNORECASE).strip()
+            sample_texts_clean.append(action_text_clean)
             
-            self.scratchpad += f'\nAction {self.step_n}:'
-            
-            # Sample multiple actions and compute entropy for each
-            prompt = self._build_agent_prompt()
-            original_temp = self.llm.temperature
-            object.__setattr__(self.llm, 'temperature', 0.7)
-            
-            # Generate multiple samples
-            samples = []
-            for _ in range(5):
-                text, logprobs = self.llm._call_with_logprobs(prompt, stop=["\n"])
-                text = format_step(text)
-                samples.append((text, logprobs))
-            
-            object.__setattr__(self.llm, 'temperature', original_temp)
-            
-            # Compute entropy for each individual sample and pick the one with LOWEST entropy
-            sample_entropies = []
-            for text, logprobs in samples:
-                # Compute entropy for this single sample (negative sum of logprobs)
-                if logprobs and len(logprobs) > 0:
-                    # Extract logprob values
-                    if isinstance(logprobs[0], dict):
-                        logprob_values = [item["logprob"] for item in logprobs if isinstance(item, dict)]
-                    else:
-                        logprob_values = [item for item in logprobs if isinstance(item, (int, float))]
-                    # Sequence logprob (sum of token logprobs)
-                    seq_logprob = sum(logprob_values) if logprob_values else 0.0
-                    # Entropy is negative logprob (higher = more uncertain)
-                    entropy = -seq_logprob
+            # Compute entropy for this single sample (negative sum of logprobs)
+            if logprobs and len(logprobs) > 0:
+                # Extract logprob values
+                if isinstance(logprobs[0], dict):
+                    logprob_values = [item["logprob"] for item in logprobs if isinstance(item, dict)]
                 else:
-                    entropy = float('inf')  # Very high entropy if no logprobs
-                sample_entropies.append(entropy)
-            
-            # ALWAYS pick the sample with LOWEST entropy (most confident)
-            best_idx = min(range(len(samples)), key=lambda i: sample_entropies[i])
-            action, action_logprobs = samples[best_idx]
-            best_entropy = sample_entropies[best_idx]
-            
-            # For logging, we still need all logprobs for aggregate entropy computation
-            all_logprobs = [logprobs for _, logprobs in samples]
-            
-            # Clean up action - remove any format labels the model might have generated
+                    logprob_values = [item for item in logprobs if isinstance(item, (int, float))]
+                # Sequence logprob (sum of token logprobs)
+                seq_logprob = sum(logprob_values) if logprob_values else 0.0
+                # Entropy is negative logprob (higher = more uncertain)
+                entropy = -seq_logprob
+            else:
+                entropy = float('inf')  # Very high entropy if no logprobs
+            sample_entropies.append(entropy)
+        
+        # ALWAYS pick the sample with LOWEST entropy (most confident)
+        best_idx = min(range(len(samples)), key=lambda i: sample_entropies[i])
+        action, action_logprobs = samples[best_idx]
+        best_entropy = sample_entropies[best_idx]
+        action_clean = sample_texts_clean[best_idx]
+        
+        # For logging, we still need all logprobs for aggregate entropy computation
+        all_logprobs = [logprobs for _, logprobs in samples]
+        
+        # Record all samples (selected + discarded) with their text and entropy
+        all_samples_info = []
+        for i, (text_clean, entropy_val) in enumerate(zip(sample_texts_clean, sample_entropies)):
+            all_samples_info.append({
+                'index': i,
+                'text': text_clean,
+                'entropy': entropy_val,
+                'selected': (i == best_idx)
+            })
+        
+        # Store all samples in entropy_data
+        self.entropy_data['action_samples'] = self.entropy_data.get('action_samples', [])
+        self.entropy_data['action_samples'].append({
+            'step': self.step_n,
+            'samples': all_samples_info,
+            'selected_index': best_idx,
+            'selected_entropy': best_entropy
+        })
+        
+        # If empty or too short, try to generate something meaningful
+        if not action_clean or len(action_clean) < 3:
+            # Retry once with single sample
+            action = self.prompt_agent()
             action_clean = re.sub(r'^(Thought|Action)\s+\d+\s*:\s*', '', action, flags=re.IGNORECASE).strip()
             action_clean = re.sub(r'(Thought|Action)\s+\d+\s*:\s*', '', action_clean, flags=re.IGNORECASE).strip()
-            
-            # Check if we should retry due to high entropy
-            # If threshold is None, negative, or very high (>= 999), disable backtracking
-            if (self.entropy_threshold is not None and 
-                self.entropy_threshold >= 0 and
-                self.entropy_threshold < 999.0 and
-                best_entropy > self.entropy_threshold and 
-                self.retry_counts[action_retry_key] < self.max_retries_per_step):
-                self.retry_counts[action_retry_key] += 1
-                
-                # Track discarded action
-                discarded_info = {
-                    'step': self.step_n,
-                    'action': action_clean,
-                    'entropy': best_entropy,
-                    'threshold': self.entropy_threshold,
-                    'retry_count': self.retry_counts[action_retry_key],
-                    'all_sample_entropies': sample_entropies  # Show all 5 sample entropies
-                }
-                self.entropy_data['discarded_actions'].append(discarded_info)
-                
-                print(f"[DISCARDED] Action: {action_clean[:50]}... (entropy: {best_entropy:.2f} > {self.entropy_threshold}, retry {self.retry_counts[action_retry_key]}/{self.max_retries_per_step})")
-                print(f"[High action entropy: {best_entropy:.2f} > {self.entropy_threshold} (best of 5), retrying...]")
-                continue  # Retry with lower entropy
-            
-            # If empty or too short, try to generate something meaningful
             if not action_clean or len(action_clean) < 3:
-                # Retry once
-                action = self.prompt_agent()
-                action_clean = re.sub(r'^(Thought|Action)\s+\d+\s*:\s*', '', action, flags=re.IGNORECASE).strip()
-                action_clean = re.sub(r'(Thought|Action)\s+\d+\s*:\s*', '', action_clean, flags=re.IGNORECASE).strip()
-                if not action_clean or len(action_clean) < 3:
-                    # Try to infer a reasonable first action based on the question
-                    if "flight" in self.question.lower():
-                        action_clean = "LoadDB[flights]"
-                    else:
-                        # Last resort: use a generic action
-                        action_clean = "LoadDB[flights]"  # Default to break the loop
-            
-            # Track action entropy for few-shot analysis (use aggregate for logging)
-            self._log_step_entropy('action', action_clean, all_logprobs)
-            self.scratchpad += ' ' + action_clean
-            print(self.scratchpad.split('\n')[-1])
-            if best_entropy < float('inf'):
-                print(f"[Selected action with entropy: {best_entropy:.2f} (best of 5, aggregate: {self._compute_step_entropy(all_logprobs):.2f})]")
-            break  # Success, exit retry loop
+                # Try to infer a reasonable first action based on the question
+                if "flight" in self.question.lower():
+                    action_clean = "LoadDB[flights]"
+                else:
+                    # Last resort: use a generic action
+                    action_clean = "LoadDB[flights]"  # Default to break the loop
+        
+        # Track action entropy for few-shot analysis (use aggregate for logging)
+        self._log_step_entropy('action', action_clean, all_logprobs)
+        self.scratchpad += ' ' + action_clean
+        print(self.scratchpad.split('\n')[-1])
+        if best_entropy < float('inf'):
+            print(f"[Selected action with entropy: {best_entropy:.2f} (best of {self.num_action_samples}, aggregate: {self._compute_step_entropy(all_logprobs):.2f})]")
+            # Print discarded samples
+            discarded_samples = [s for i, s in enumerate(all_samples_info) if i != best_idx]
+            if discarded_samples:
+                entropy_list = [f"{s['entropy']:.2f}" for s in discarded_samples]
+                print(f"[Discarded {len(discarded_samples)} samples with entropies: {entropy_list}]")
 
         # Observe
         self.scratchpad += f'\nObservation {self.step_n}: '
@@ -628,7 +731,8 @@ class ReactAgent:
             action_type = 'PythonInterpreter'
             argument = action_clean[18:-1]  # Extract argument from PythonInterpreter[...] format
             try:
-                self.scratchpad += python_interpreter.execute(argument)
+                result = python_interpreter.execute(argument)
+                self.scratchpad += self._truncate_observation(result, max_tokens=10000)
             except Exception as e:
                 self.scratchpad += f"An error occurred: {e}"
         elif '], ' in action_clean:
@@ -659,7 +763,8 @@ class ReactAgent:
                     # Lazy import to avoid chromadb/sqlite3 issues when not using agenda dataset
                     from tools.text import agenda_retriever
                     result, scores = agenda_retriever.query_llm_with_scores([0], argument)
-                    self.scratchpad += result.strip('\n').strip()
+                    result = self._truncate_observation(result.strip('\n').strip(), max_tokens=10000)
+                    self.scratchpad += result
                     self.log_tool_entropy('RetrieveAgenda', result, scores)
                 except Exception as e:
                     if 'RateLimitError' in str(type(e)):
@@ -673,7 +778,8 @@ class ReactAgent:
                     # Lazy import to avoid chromadb/sqlite3 issues when not using scirex dataset
                     from tools.text import scirex_retriever
                     result, scores = scirex_retriever.query_llm_with_scores([0], argument)
-                    self.scratchpad += result.strip('\n').strip()
+                    result = self._truncate_observation(result.strip('\n').strip(), max_tokens=10000)
+                    self.scratchpad += result
                     self.log_tool_entropy('RetrieveScirex', result, scores)
                 except Exception as e:
                     if 'RateLimitError' in str(type(e)):
@@ -684,7 +790,8 @@ class ReactAgent:
             
             elif action_type == 'LoadDB':
                 try:
-                    self.scratchpad += self.table_toolkits.db_loader(argument)
+                    result = self.table_toolkits.db_loader(argument)
+                    self.scratchpad += self._truncate_observation(result, max_tokens=50000)
                 except Exception as e:
                     if 'RateLimitError' in str(type(e)):
                         self.scratchpad += f'OpenAI API Rate Limit Exceeded. Please try again.'
@@ -693,7 +800,8 @@ class ReactAgent:
             
             elif action_type == 'FilterDB':
                 try:
-                    self.scratchpad += self.table_toolkits.data_filter(argument)
+                    result = self.table_toolkits.data_filter(argument)
+                    self.scratchpad += self._truncate_observation(result, max_tokens=50000)
                 except Exception as e:
                     print(e)
                     if 'RateLimitError' in str(type(e)):
@@ -703,7 +811,8 @@ class ReactAgent:
             
             elif action_type == 'GetValue':
                 try:
-                    self.scratchpad += self.table_toolkits.get_value(argument)
+                    result = self.table_toolkits.get_value(argument)
+                    self.scratchpad += self._truncate_observation(result, max_tokens=50000)
                 except Exception as e:
                     if 'RateLimitError' in str(type(e)):
                         self.scratchpad += f'OpenAI API Rate Limit Exceeded. Please try again.'
@@ -712,7 +821,8 @@ class ReactAgent:
             
             elif action_type == 'LoadGraph':
                 try:
-                    self.scratchpad += self.graph_toolkits.load_graph(argument)
+                    result = self.graph_toolkits.load_graph(argument)
+                    self.scratchpad += self._truncate_observation(result, max_tokens=50000)
                 except Exception as e:
                     if 'RateLimitError' in str(type(e)):
                         self.scratchpad += f'OpenAI API Rate Limit Exceeded. Please try again.'
@@ -721,7 +831,8 @@ class ReactAgent:
             
             elif action_type == 'NeighbourCheck':
                 try:
-                    self.scratchpad += self.graph_toolkits.check_neighbours(argument)
+                    result = self.graph_toolkits.check_neighbours(argument)
+                    self.scratchpad += self._truncate_observation(result, max_tokens=10000)
                 except Exception as e:
                     if 'RateLimitError' in str(type(e)):
                         self.scratchpad += f'OpenAI API Rate Limit Exceeded. Please try again.'
@@ -730,7 +841,8 @@ class ReactAgent:
             
             elif action_type == 'NodeCheck':
                 try:
-                    self.scratchpad += self.graph_toolkits.check_nodes(argument)
+                    result = self.graph_toolkits.check_nodes(argument)
+                    self.scratchpad += self._truncate_observation(result, max_tokens=10000)
                 except Exception as e:
                     if 'RateLimitError' in str(type(e)):
                         self.scratchpad += f'OpenAI API Rate Limit Exceeded. Please try again.'
@@ -741,7 +853,8 @@ class ReactAgent:
             
             elif action_type == 'EdgeCheck':
                 try:
-                    self.scratchpad += self.graph_toolkits.check_edges(argument)
+                    result = self.graph_toolkits.check_edges(argument)
+                    self.scratchpad += self._truncate_observation(result, max_tokens=10000)
                 except Exception as e:
                     if 'RateLimitError' in str(type(e)):
                         self.scratchpad += f'OpenAI API Rate Limit Exceeded. Please try again.'
@@ -752,7 +865,8 @@ class ReactAgent:
             
             elif action_type == 'SQLInterpreter':
                 try:
-                    self.scratchpad += sql_interpreter.execute(argument)
+                    result = sql_interpreter.execute(argument)
+                    self.scratchpad += self._truncate_observation(result, max_tokens=10000)
                 except Exception as e:
                     if 'RateLimitError' in str(type(e)):
                         self.scratchpad += f'OpenAI API Rate Limit Exceeded. Please try again.'
@@ -762,7 +876,7 @@ class ReactAgent:
             elif action_type == 'PythonInterpreter':
                 try:
                     result = python_interpreter.execute(argument)
-                    self.scratchpad += result
+                    self.scratchpad += self._truncate_observation(result, max_tokens=10000)
                 except Exception as e:
                     self.scratchpad += f"An error occurred: {e}"
                     
@@ -848,7 +962,20 @@ class ReactAgent:
         return EM(self.answer, self.key)
 
     def is_halted(self) -> bool:
-        return ((self.step_n > self.max_steps) or (len(self.enc.encode(self._build_agent_prompt())) > 3896)) and not self.finished
+        # Use actual tokenizer instead of tiktoken for accurate token counting
+        # Check if prompt exceeds safe context window (100K tokens)
+        prompt = self._build_agent_prompt()
+        try:
+            # Use actual tokenizer for accurate count
+            token_count = len(self.llm.tokenizer.encode(prompt, add_special_tokens=False))
+            # Halt if exceeds 100K tokens (model max is 131K, but we need room for generation)
+            token_limit_exceeded = token_count > 100000
+        except:
+            # Fallback to tiktoken if tokenizer fails
+            token_count = len(self.enc.encode(prompt))
+            token_limit_exceeded = token_count > 100000
+        
+        return ((self.step_n > self.max_steps) or token_limit_exceeded) and not self.finished
 
     def __reset_agent(self) -> None:
         self.step_n = 1

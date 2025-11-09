@@ -41,6 +41,10 @@ parser.add_argument("--entropy_threshold", type=float, default=6.0,
                     help="Entropy threshold for action backtracking (higher = less backtracking, set to 999 to disable)")
 parser.add_argument("--max_retries_per_step", type=int, default=3,
                     help="Maximum number of retries per step when entropy is too high")
+parser.add_argument("--num_action_samples", type=int, default=5,
+                    help="Number of action samples to generate for entropy-based selection (default: 5, original code had 1)")
+parser.add_argument("--num_answer_samples", type=int, default=10,
+                    help="Number of final answer samples for entropy computation (default: 10, set to 0 to disable)")
 parser.add_argument("--output_dir", type=str, default=None,
                     help="Output directory for logs and results")
 
@@ -54,10 +58,11 @@ if args.dataset == "flights":
 if args.wolframalpha_api_key:
     os.environ['WOLFRAMALPHA_API_KEY'] = args.wolframalpha_api_key
 
-# Set output directory
+# Set output directory (include num_action_samples to distinguish runs)
 if args.output_dir is None:
+    samples_suffix = f"samples{args.num_action_samples}" if args.num_action_samples != 1 else "no-sampling"
     args.output_dir = os.path.join(args.path, 'benchmark/LLaMA/logs', 
-                                   f'llama-3.1-8b-{datetime_string}', 
+                                   f'llama-3.1-8b-{datetime_string}-{samples_suffix}', 
                                    f'{args.dataset}-{args.hardness}')
 
 # Load questions
@@ -132,7 +137,12 @@ if args.debug:
     print("\n=== Computing Entropy ===")
     import sys
     sys.stdout.flush()
-    entropy_data = agent.compute_final_answer_entropy(n_samples=10, temperature=0.8)
+    # Compute final answer entropy if enabled
+    if args.num_answer_samples > 0:
+        entropy_data = agent.compute_final_answer_entropy(n_samples=args.num_answer_samples, temperature=0.8)
+    else:
+        entropy_data = agent.entropy_data
+        print("Skipping final answer entropy computation (num_answer_samples=0)")
     
     print(f'\nEntropy Metrics:')
     print(f'  Predictive H(Y|Z,x): {entropy_data["predictive_entropy"]:.4f}')
@@ -172,16 +182,19 @@ BEGIN TRIAL debug-{random_indices}
 """
     log += remove_fewshot(agent._build_agent_prompt()) + f'\nCorrect answer: {test_a}\n\n'
     
-    # Add discarded actions section if any
-    if entropy_data.get('discarded_actions') and len(entropy_data['discarded_actions']) > 0:
+    # Add action samples section (all 5 samples with selected/discarded info)
+    if entropy_data.get('action_samples') and len(entropy_data['action_samples']) > 0:
         log += f'\n{"="*60}\n'
-        log += f'DISCARDED ACTIONS (High Entropy)\n'
+        log += f'ACTION SAMPLES (All samples per step)\n'
         log += f'{"="*60}\n'
-        for discarded in entropy_data['discarded_actions']:
-            log += f"Step {discarded['step']}, Retry {discarded['retry_count']}:\n"
-            log += f"  Action: {discarded['action']}\n"
-            log += f"  Entropy: {discarded['entropy']:.4f} (threshold: {discarded['threshold']:.2f})\n"
-            log += f"  All sample entropies: {[f'{e:.2f}' for e in discarded['all_sample_entropies']]}\n"
+        for action_sample_group in entropy_data['action_samples']:
+            step = action_sample_group['step']
+            samples = action_sample_group.get('samples', [])
+            log += f"Step {step}:\n"
+            for sample in samples:
+                status = "SELECTED" if sample.get('selected', False) else "discarded"
+                log += f"  [{status}] Sample {sample['index']}: {sample.get('text', '')[:80]}\n"
+                log += f"    Entropy: {sample.get('entropy', 0):.4f}\n"
             log += f"\n"
         log += f'{"="*60}\n\n'
     
@@ -264,8 +277,12 @@ else:
             print("Agent finished. Computing entropy...")
             sys.stdout.flush()
             
-            # Compute final answer entropy
-            entropy_data = agent.compute_final_answer_entropy(n_samples=10, temperature=0.8)
+            # Compute final answer entropy if enabled
+            if args.num_answer_samples > 0:
+                entropy_data = agent.compute_final_answer_entropy(n_samples=args.num_answer_samples, temperature=0.8)
+            else:
+                entropy_data = agent.entropy_data
+                print("Skipping final answer entropy computation (num_answer_samples=0)")
             print("Entropy computation finished.")
             sys.stdout.flush()
             
@@ -294,16 +311,20 @@ BEGIN TRIAL {qid}
 """
             log += remove_fewshot(agent._build_agent_prompt()) + f'\nCorrect answer: {agent.key}\n\n'
             
-            # Add discarded actions section if any
-            if entropy_data.get('discarded_actions') and len(entropy_data['discarded_actions']) > 0:
+            # Add action samples section (all 5 samples with selected/discarded info)
+            if entropy_data.get('action_samples') and len(entropy_data['action_samples']) > 0:
+                num_samples = len(entropy_data['action_samples'][0].get('samples', [])) if entropy_data['action_samples'][0].get('samples') else 5
                 log += f'\n{"="*60}\n'
-                log += f'DISCARDED ACTIONS (High Entropy)\n'
+                log += f'ACTION SAMPLES (All {num_samples} samples per step)\n'
                 log += f'{"="*60}\n'
-                for discarded in entropy_data['discarded_actions']:
-                    log += f"Step {discarded['step']}, Retry {discarded['retry_count']}:\n"
-                    log += f"  Action: {discarded['action']}\n"
-                    log += f"  Entropy: {discarded['entropy']:.4f} (threshold: {discarded['threshold']:.2f})\n"
-                    log += f"  All sample entropies: {[f'{e:.2f}' for e in discarded['all_sample_entropies']]}\n"
+                for action_sample_group in entropy_data['action_samples']:
+                    step = action_sample_group['step']
+                    samples = action_sample_group.get('samples', [])
+                    log += f"Step {step}:\n"
+                    for sample in samples:
+                        status = "SELECTED" if sample.get('selected', False) else "discarded"
+                        log += f"  [{status}] Sample {sample['index']}: {sample.get('text', '')[:80]}\n"
+                        log += f"    Entropy: {sample.get('entropy', 0):.4f}\n"
                     log += f"\n"
                 log += f'{"="*60}\n\n'
             
@@ -338,16 +359,19 @@ BEGIN TRIAL {qid}
 """
             try:
                 log += remove_fewshot(agent._build_agent_prompt()) + f'\nCorrect answer: {agent.key}\n\n'
-                # Add discarded actions if available
-                if hasattr(agent, 'entropy_data') and agent.entropy_data.get('discarded_actions'):
+                # Add action samples if available
+                if hasattr(agent, 'entropy_data') and agent.entropy_data.get('action_samples'):
                     log += f'\n{"="*60}\n'
-                    log += f'DISCARDED ACTIONS (High Entropy)\n'
+                    log += f'ACTION SAMPLES (All samples per step)\n'
                     log += f'{"="*60}\n'
-                    for discarded in agent.entropy_data['discarded_actions']:
-                        log += f"Step {discarded['step']}, Retry {discarded['retry_count']}:\n"
-                        log += f"  Action: {discarded['action']}\n"
-                        log += f"  Entropy: {discarded['entropy']:.4f} (threshold: {discarded['threshold']:.2f})\n"
-                        log += f"  All sample entropies: {[f'{e:.2f}' for e in discarded['all_sample_entropies']]}\n"
+                    for action_sample_group in agent.entropy_data['action_samples']:
+                        step = action_sample_group['step']
+                        samples = action_sample_group.get('samples', [])
+                        log += f"Step {step}:\n"
+                        for sample in samples:
+                            status = "SELECTED" if sample.get('selected', False) else "discarded"
+                            log += f"  [{status}] Sample {sample['index']}: {sample.get('text', '')[:80]}\n"
+                            log += f"    Entropy: {sample.get('entropy', 0):.4f}\n"
                         log += f"\n"
                     log += f'{"="*60}\n\n'
             except:

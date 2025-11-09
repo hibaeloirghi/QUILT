@@ -1,0 +1,31 @@
+Job ID: 5726704
+Node: vulcan33
+Started at: Sun Nov  9 09:35:55 EST 2025
+Configuration:
+  ToolQA path: /fs/nexus-scratch/eloirghi/QUILT
+  Dataset: flight
+  Hardness: easy
+  Prompt type: easy
+  Llama model: meta-llama/Meta-Llama-3.1-8B-Instruct
+  Max steps: 20
+  Max questions: 50
+  Num action samples: 3
+  Num answer samples: 10
+
+=== Running Llama-3.1-8B-Instruct ReAct on ToolQA ===
+
+Running command:
+python benchmark/LLaMA/code/test_llama_react.py --dataset flight --hardness easy --path /fs/nexus-scratch/eloirghi/QUILT --prompt easy --llama_model meta-llama/Meta-Llama-3.1-8B-Instruct --hf_token ***MASKED*** --max_steps 20 --max_questions 50 --num_action_samples 3 --num_answer_samples 10
+
+Loaded 100 questions from /fs/nexus-scratch/eloirghi/QUILT/data/questions/easy/flight-easy.jsonl
+Output directory: /fs/nexus-scratch/eloirghi/QUILT/benchmark/LLaMA/logs/llama-3.1-8b-2025-11-09 09:36:07-samples3/flight-easy
+Loading model...
+Model loaded successfully.
+Processing first 50 questions (max_questions=50)
+
+============================================================
+Processing 1/100: easy-flight-0000
+Question: What was the departure time of the AA2319 flight from MIA to LAS on 2022-06-05?
+============================================================
+
+Running agent...
