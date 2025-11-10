@@ -1,0 +1,118 @@
+
+########################################
+BEGIN TRIAL easy-flight-0017
+#######################################
+Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be 13 types: 
+(1) Calculate[formula], which calculates the formula and returns the result.
+(2) RetrieveAgenda[keyword], which retrieves the agenda related to keyword.
+(3) RetrieveScirex[keyword], which retrieves machine learning papers' paragraphs related to keyword.
+(4) LoadDB[DBName], which loads the database DBName and returns the database. The DBName can be one of the following: flights/coffee/airbnb/yelp.
+(5) FilterDB[condition], which filters the database DBName by the column column_name the relation (e.g., =, >, etc.) and the value value, and returns the filtered database.
+(6) GetValue[column_name], which returns the value of the column column_name in the database DBName.
+(7) LoadGraph[GraphName], which loads the graph GraphName and returns the graph. The GraphName can be one of the following: PaperNet/AuthorNet.
+(8) NeighbourCheck[GraphName, Node], which lists the neighbours of the node Node in the graph GraphName and returns the neighbours. 
+(9) NodeCheck[GraphName, Node], which returns the detailed attribute information of Node. 
+(10) EdgeCheck[GraphName, Node1, Node2], which returns the detailed attribute information of the edge between Node1 and Node2. 
+(11) SQLInterpreter[SQL], which interprets the SQL query SQL and returns the result.
+(12) PythonInterpreter[Python], which interprets the Python code Python and returns the result.
+(13) Finish[answer], which returns the answer and finishes the task.
+You may take as many steps as necessary.
+Question: Was the flight WN2465 from SAN to DEN cancelled on 2022-01-10? Only return 'Yes' or 'No'.
+Thought 1: This is a question related to flights
+Action 1: LoadDB[flights]
+Observation 1: We have successfully loaded the flights database, including the following columns: FlightDate, Airline, Origin, Dest, Cancelled, Diverted, CRSDepTime, DepTime, DepDelayMinutes, DepDelay, ArrTime, ArrDelayMinutes, AirTime, CRSElapsedTime, ActualElapsedTime, Distance, Year, Quarter, Month, DayofMonth, DayOfWeek, Marketing_Airline_Network, Operated_or_Branded_Code_Share_Partners, DOT_ID_Marketing_Airline, IATA_Code_Marketing_Airline, Flight_Number_Marketing_Airline, Operating_Airline, DOT_ID_Operating_Airline, IATA_Code_Operating_Airline, Tail_Number, Flight_Number_Operating_Airline, OriginAirportID, OriginAirportSeqID, OriginCityMarketID, OriginCityName, OriginState, OriginStateFips, OriginStateName, OriginWac, DestAirportID, DestAirportSeqID, DestCityMarketID, DestCityName, DestState, DestStateFips, DestStateName, DestWac, DepDel15, DepartureDelayGroups, DepTimeBlk, TaxiOut, WheelsOff, WheelsOn, TaxiIn, CRSArrTime, ArrDelay, ArrDel15, ArrivalDelayGroups, ArrTimeBlk, DistanceGroup, DivAirportLandings.
+Thought 2: We need to filter the information related to the query
+Action 2: FilterDB[Flight_Number_Marketing_Airline=2465, FlightDate=2022-01-10, Origin=SAN, Dest=DEN]
+Observation 2: We have successfully filtered the data (1 rows).
+Thought 3: We then need to know whether the flight was cancelled
+Action 3: GetValue[Cancelled]
+Observation 3: False
+Thought 4: Since the Cancelled column is False, the answer should be 'No'.
+Action 4: Finish[No] """
+Observation 4: Invalid Action. Valid Actions are Calculate [<Formula>] RetrieveAgenda[<Content>] RetrieveScirex[<Content>] LoadDB[<DBName>] FilterDB[<Condition>, <Condition>, ...] GetValue[<Column>] LoadGraph[<GraphName>] NeighbourCheck[<GraphName>, <Node>] NodeCheck[<GraphName>, <Node>] EdgeCheck[<GraphName>, <Node1>, <Node2>] SQLInterpreter[<SQLCommand>] PythonInterpreter[<PythonCode>] and Finish[<answer>].
+Thought 5: No valid action to perform.
+Action 5: Finish[No] """
+Observation 5: Invalid Action. Valid Actions are Calculate [<Formula>] RetrieveAgenda[<Content>] RetrieveScirex[<Content>] LoadDB[<DBName>] FilterDB[<Condition>, <Condition>, ...] GetValue[<Column>] LoadGraph[<GraphName>] NeighbourCheck[<GraphName>, <Node>] NodeCheck[<GraphName>, <Node>] EdgeCheck[<GraphName>, <Node1>, <Node2>] SQLInterpreter[<SQLCommand>] PythonInterpreter[<PythonCode>] and Finish[<answer>].
+Thought 6: No valid action to perform.
+Action 6: Finish[No] """
+Observation 6: Too many invalid actions. Forcing finish with last valid observation.
+Correct answer: No
+
+
+============================================================
+ACTION SAMPLES (All 5 samples per step)
+============================================================
+Step 1:
+  [discarded] Sample 0: LoadDB[flights]
+    Entropy: 6.4772
+  [SELECTED] Sample 1: LoadDB[flights]
+    Entropy: 0.6679
+  [discarded] Sample 2: LoadDB[flights]
+    Entropy: 0.6679
+  [discarded] Sample 3: LoadDB[flights]
+    Entropy: 0.6679
+  [discarded] Sample 4: LoadDB[flights]
+    Entropy: 7.1821
+
+Step 2:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=2465, FlightDate=2022-01-10, Dest=SAN, 
+    Entropy: 39.7881
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=2465, FlightDate=2022-01-10, Origin=SAN
+    Entropy: 6.4922
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=2465, FlightDate=2022-01-10, Dest=SAN, 
+    Entropy: 9.0990
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=2465, FlightDate=2022-01-10, Dest=SAN, 
+    Entropy: 13.0491
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=2465, FlightDate=2022-01-10, Origin=SAN
+    Entropy: 6.8268
+
+Step 3:
+  [discarded] Sample 0: GetValue[Cancelled]
+    Entropy: 1.6152
+  [SELECTED] Sample 1: GetValue[Cancelled]
+    Entropy: 0.5437
+  [discarded] Sample 2: GetValue[Cancelled]
+    Entropy: 0.5437
+  [discarded] Sample 3: GetValue[Cancelled]
+    Entropy: 1.6152
+  [discarded] Sample 4: GetValue[Cancelled]
+    Entropy: 0.5437
+
+Step 4:
+  [discarded] Sample 0: Finish[No]
+    Entropy: 16.8162
+  [discarded] Sample 1: Finish[No]
+    Entropy: 13.0809
+  [SELECTED] Sample 2: Finish[No] """
+    Entropy: 6.2537
+  [discarded] Sample 3: Finish[No]
+    Entropy: 16.0653
+  [discarded] Sample 4: Finish[No]
+    Entropy: 11.7138
+
+Step 5:
+  [discarded] Sample 0: Finish[No] """
+    Entropy: 14.7394
+  [discarded] Sample 1: Finish[Invalid Action]
+    Entropy: 11.8387
+  [discarded] Sample 2: Finish[No] """ """
+    Entropy: 28.5532
+  [SELECTED] Sample 3: Finish[No] """
+    Entropy: 11.7085
+  [discarded] Sample 4: Finish[No] """ """
+    Entropy: 15.7360
+
+Step 6:
+  [SELECTED] Sample 0: Finish[No] """
+    Entropy: -0.0000
+  [discarded] Sample 1: Finish[No] """
+    Entropy: -0.0000
+  [discarded] Sample 2: Finish[No] """
+    Entropy: -0.0000
+  [discarded] Sample 3: Finish[No] """
+    Entropy: -0.0000
+  [discarded] Sample 4: Finish[No] """
+    Entropy: -0.0000
+
+============================================================
+

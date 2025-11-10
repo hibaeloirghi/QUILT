@@ -1,0 +1,133 @@
+
+########################################
+BEGIN TRIAL easy-flight-0013
+#######################################
+Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be 13 types: 
+(1) Calculate[formula], which calculates the formula and returns the result.
+(2) RetrieveAgenda[keyword], which retrieves the agenda related to keyword.
+(3) RetrieveScirex[keyword], which retrieves machine learning papers' paragraphs related to keyword.
+(4) LoadDB[DBName], which loads the database DBName and returns the database. The DBName can be one of the following: flights/coffee/airbnb/yelp.
+(5) FilterDB[condition], which filters the database DBName by the column column_name the relation (e.g., =, >, etc.) and the value value, and returns the filtered database.
+(6) GetValue[column_name], which returns the value of the column column_name in the database DBName.
+(7) LoadGraph[GraphName], which loads the graph GraphName and returns the graph. The GraphName can be one of the following: PaperNet/AuthorNet.
+(8) NeighbourCheck[GraphName, Node], which lists the neighbours of the node Node in the graph GraphName and returns the neighbours. 
+(9) NodeCheck[GraphName, Node], which returns the detailed attribute information of Node. 
+(10) EdgeCheck[GraphName, Node1, Node2], which returns the detailed attribute information of the edge between Node1 and Node2. 
+(11) SQLInterpreter[SQL], which interprets the SQL query SQL and returns the result.
+(12) PythonInterpreter[Python], which interprets the Python code Python and returns the result.
+(13) Finish[answer], which returns the answer and finishes the task.
+You may take as many steps as necessary.
+Question: Was the flight AA6152 from CHO to CLT cancelled on 2022-07-06? Only return 'Yes' or 'No'.
+Thought 1: This is a question related to flights
+Action 1: LoadDB[flights]
+Observation 1: We have successfully loaded the flights database, including the following columns: FlightDate, Airline, Origin, Dest, Cancelled, Diverted, CRSDepTime, DepTime, DepDelayMinutes, DepDelay, ArrTime, ArrDelayMinutes, AirTime, CRSElapsedTime, ActualElapsedTime, Distance, Year, Quarter, Month, DayofMonth, DayOfWeek, Marketing_Airline_Network, Operated_or_Branded_Code_Share_Partners, DOT_ID_Marketing_Airline, IATA_Code_Marketing_Airline, Flight_Number_Marketing_Airline, Operating_Airline, DOT_ID_Operating_Airline, IATA_Code_Operating_Airline, Tail_Number, Flight_Number_Operating_Airline, OriginAirportID, OriginAirportSeqID, OriginCityMarketID, OriginCityName, OriginState, OriginStateFips, OriginStateName, OriginWac, DestAirportID, DestAirportSeqID, DestCityMarketID, DestCityName, DestState, DestStateFips, DestStateName, DestWac, DepDel15, DepartureDelayGroups, DepTimeBlk, TaxiOut, WheelsOff, WheelsOn, TaxiIn, CRSArrTime, ArrDelay, ArrDel15, ArrivalDelayGroups, ArrTimeBlk, DistanceGroup, DivAirportLandings.
+Thought 2: We need to filter the information related to the q
+Action 2: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO, Dest=CLT, Cancelled=True]
+Observation 2: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 3: We need to filter the information related to the q
+Action 3: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO, Dest=CLT, Cancelled=True]
+Observation 3: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 4: We need to filter the information related to the q
+Action 4: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO, Dest=CLT, Cancelled=True]
+Observation 4: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 5: We need to filter the information related to the q
+Action 5: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO, Dest=CLT, Cancelled=False]
+Observation 5: We have successfully filtered the data (1 rows).
+Thought 6: We then need to know the cancelled status.
+Action 6: GetValue[Cancelled]
+Observation 6: False
+Thought 7: Since the cancelled status is False, the answer is 'No'.
+Action 7: Finish[No]
+Observation 7: Answer is CORRECT
+Correct answer: No
+
+
+============================================================
+ACTION SAMPLES (All 5 samples per step)
+============================================================
+Step 1:
+  [SELECTED] Sample 0: LoadDB[flights]
+    Entropy: 0.7526
+  [discarded] Sample 1: LoadDB[flights]
+    Entropy: 1.1098
+  [discarded] Sample 2: LoadDB[flights]
+    Entropy: 0.7526
+  [discarded] Sample 3: LoadDB[flights]
+    Entropy: 0.7526
+  [discarded] Sample 4: LoadDB[flights]
+    Entropy: 7.8496
+
+Step 2:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Cancelled=
+    Entropy: 19.5654
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 6.7478
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Cancelled=
+    Entropy: 17.3061
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Cancelled=
+    Entropy: 8.4482
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 8.7097
+
+Step 3:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 5.5039
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 17.2816
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 7.7752
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 19.0122
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 8.2625
+
+Step 4:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 1.4046
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 4.0798
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 1.4046
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 1.4046
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 4.0798
+
+Step 5:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 18.4170
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 16.2950
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 12.1830
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 21.4699
+  [SELECTED] Sample 4: FilterDB[Flight_Number_Marketing_Airline=6152, FlightDate=2022-07-06, Origin=CHO
+    Entropy: 4.6081
+
+Step 6:
+  [SELECTED] Sample 0: GetValue[Cancelled]
+    Entropy: 0.1550
+  [discarded] Sample 1: GetValue[Cancelled]
+    Entropy: 0.1550
+  [discarded] Sample 2: GetValue[Cancelled]
+    Entropy: 1.9407
+  [discarded] Sample 3: GetValue[Cancelled]
+    Entropy: 0.1550
+  [discarded] Sample 4: GetValue[Cancelled]
+    Entropy: 0.1550
+
+Step 7:
+  [discarded] Sample 0: Finish[No]
+    Entropy: 4.5363
+  [SELECTED] Sample 1: Finish[No]
+    Entropy: 3.9689
+  [discarded] Sample 2: Finish[No]
+    Entropy: 14.8574
+  [discarded] Sample 3: Finish[No]
+    Entropy: 16.2078
+  [discarded] Sample 4: Finish[No]
+    Entropy: 9.5037
+
+============================================================
+

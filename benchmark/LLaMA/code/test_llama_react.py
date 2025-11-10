@@ -238,6 +238,22 @@ else:
     print("Model loaded successfully.")
     
     # Process all questions (or just one if debug mode)
+    # Store minimal agent status objects instead of full agents to save memory
+    class AgentStatus:
+        def __init__(self, agent):
+            self._is_correct = agent.is_correct()
+            self._is_halted = agent.is_halted()
+            self._is_finished = agent.is_finished()
+        
+        def is_correct(self):
+            return self._is_correct
+        
+        def is_halted(self):
+            return self._is_halted
+        
+        def is_finished(self):
+            return self._is_finished
+    
     agents = []
     unanswered_questions = []
     
@@ -345,8 +361,19 @@ BEGIN TRIAL {qid}
                     **entropy_data
                 }, f, indent=2)
             
-            # Append agent to list before cleanup
-            agents.append(agent)
+            # Extract status before cleanup
+            agent_status = AgentStatus(agent)
+            
+            # Aggressively clear agent data to free memory
+            # Clear large data structures that are no longer needed
+            if hasattr(agent, 'scratchpad'):
+                agent.scratchpad = ''
+            if hasattr(agent, 'entropy_data'):
+                # Keep only minimal entropy data if needed, clear the rest
+                agent.entropy_data = {}
+            
+            # Store only agent status (not full agent) to save memory
+            agents.append(agent_status)
             
             # Clear memory between questions to prevent OOM
             import gc

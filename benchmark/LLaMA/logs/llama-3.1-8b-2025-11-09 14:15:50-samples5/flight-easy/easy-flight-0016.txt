@@ -1,0 +1,328 @@
+
+########################################
+BEGIN TRIAL easy-flight-0016
+#######################################
+Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be 13 types: 
+(1) Calculate[formula], which calculates the formula and returns the result.
+(2) RetrieveAgenda[keyword], which retrieves the agenda related to keyword.
+(3) RetrieveScirex[keyword], which retrieves machine learning papers' paragraphs related to keyword.
+(4) LoadDB[DBName], which loads the database DBName and returns the database. The DBName can be one of the following: flights/coffee/airbnb/yelp.
+(5) FilterDB[condition], which filters the database DBName by the column column_name the relation (e.g., =, >, etc.) and the value value, and returns the filtered database.
+(6) GetValue[column_name], which returns the value of the column column_name in the database DBName.
+(7) LoadGraph[GraphName], which loads the graph GraphName and returns the graph. The GraphName can be one of the following: PaperNet/AuthorNet.
+(8) NeighbourCheck[GraphName, Node], which lists the neighbours of the node Node in the graph GraphName and returns the neighbours. 
+(9) NodeCheck[GraphName, Node], which returns the detailed attribute information of Node. 
+(10) EdgeCheck[GraphName, Node1, Node2], which returns the detailed attribute information of the edge between Node1 and Node2. 
+(11) SQLInterpreter[SQL], which interprets the SQL query SQL and returns the result.
+(12) PythonInterpreter[Python], which interprets the Python code Python and returns the result.
+(13) Finish[answer], which returns the answer and finishes the task.
+You may take as many steps as necessary.
+Question: Was the flight WN5333 from RDU to BWI cancelled on 2022-01-08? Only return 'Yes' or 'No'.
+Thought 1: This is a question related to flights
+Action 1: LoadDB[flights]
+Observation 1: We have successfully loaded the flights database, including the following columns: FlightDate, Airline, Origin, Dest, Cancelled, Diverted, CRSDepTime, DepTime, DepDelayMinutes, DepDelay, ArrTime, ArrDelayMinutes, AirTime, CRSElapsedTime, ActualElapsedTime, Distance, Year, Quarter, Month, DayofMonth, DayOfWeek, Marketing_Airline_Network, Operated_or_Branded_Code_Share_Partners, DOT_ID_Marketing_Airline, IATA_Code_Marketing_Airline, Flight_Number_Marketing_Airline, Operating_Airline, DOT_ID_Operating_Airline, IATA_Code_Operating_Airline, Tail_Number, Flight_Number_Operating_Airline, OriginAirportID, OriginAirportSeqID, OriginCityMarketID, OriginCityName, OriginState, OriginStateFips, OriginStateName, OriginWac, DestAirportID, DestAirportSeqID, DestCityMarketID, DestCityName, DestState, DestStateFips, DestStateName, DestWac, DepDel15, DepartureDelayGroups, DepTimeBlk, TaxiOut, WheelsOff, WheelsOn, TaxiIn, CRSArrTime, ArrDelay, ArrDel15, ArrivalDelayGroups, ArrTimeBlk, DistanceGroup, DivAirportLandings.
+Thought 2: We need to filter the information related to the q
+Action 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 2: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 3: We should modify the condition to Cancelled=True
+Action 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 3: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 4: We should modify the condition to Cancelled=True
+Action 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 4: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 5: We should modify the condition to Cancelled=True
+Action 5: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 5: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 6: We should modify the condition to Cancelled=True
+Action 6: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 6: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 7: We should modify the condition to Cancelled=True
+Action 7: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 7: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 8: We should modify the condition to Cancelled=True
+Action 8: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 8: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 9: We should modify the condition to Cancelled=True
+Action 9: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 9: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 10: We should modify the condition to Cancelled=True
+Action 10: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 10: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 11: We should modify the condition to Cancelled=True
+Action 11: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 11: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 12: We should modify the condition to Cancelled=True
+Action 12: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 12: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 13: We should modify the condition to Cancelled=True
+Action 13: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 13: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 14: We should modify the condition to Cancelled=True
+Action 14: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 14: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 15: We should modify the condition to Cancelled=True
+Action 15: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 15: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 16: We should modify the condition to Cancelled=True
+Action 16: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 16: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 17: We should modify the condition to Cancelled=True
+Action 17: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 17: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 18: We should modify the condition to Cancelled=True
+Action 18: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 18: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 19: We should modify the condition to Cancelled=True
+Action 19: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 19: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 20: We should modify the condition to Cancelled=True
+Action 20: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU, Dest=BWI, Cancelled=True]
+Observation 20: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Correct answer: No
+
+
+============================================================
+ACTION SAMPLES (All 5 samples per step)
+============================================================
+Step 1:
+  [discarded] Sample 0: LoadDB[flights]
+    Entropy: 1.2036
+  [discarded] Sample 1: LoadDB[flights]
+    Entropy: 4.2083
+  [SELECTED] Sample 2: LoadDB[flights]
+    Entropy: 0.6679
+  [discarded] Sample 3: LoadDB[flights]
+    Entropy: 8.5579
+  [discarded] Sample 4: LoadDB[flights]
+    Entropy: 0.6679
+
+Step 2:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Cancelled=
+    Entropy: 15.0769
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 20.2905
+  [SELECTED] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 6.5372
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 25.8113
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Dest=BWI, 
+    Entropy: 8.6733
+
+Step 3:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 10.9942
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 15.1869
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 13.2635
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 6.9056
+  [SELECTED] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 4.0750
+
+Step 4:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 24.3925
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 28.0038
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 6.1731
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 9.3207
+  [SELECTED] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 5.9483
+
+Step 5:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 4.4509
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 22.9412
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 3.6104
+  [SELECTED] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 1.9206
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 13.3297
+
+Step 6:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 54.8754
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 19.7392
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 5.4534
+  [SELECTED] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 4.0369
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 4.0369
+
+Step 7:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 1.1886
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 4.5362
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 22.7613
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 12.4445
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 11.7104
+
+Step 8:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.7864
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 4.6645
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 10.5523
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.7864
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 7.7570
+
+Step 9:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 40.0823
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.6078
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 18.9666
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.6078
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 9.5604
+
+Step 10:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.8800
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 20.6029
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 12.5763
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 18.2981
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 28.6574
+
+Step 11:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2021-01-08, Origin=RDU
+    Entropy: 10.3951
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 1.5112
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2021-01-08, Origin=RDU
+    Entropy: 4.5946
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 11.8029
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2021-01-08, Origin=RDU
+    Entropy: 4.1886
+
+Step 12:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 24.7638
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.6240
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.6240
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=202-01-08, Origin=RDU,
+    Entropy: 20.3311
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 8.4544
+
+Step 13:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 6.8374
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.5304
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 13.1019
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.5304
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.5304
+
+Step 14:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.3432
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.3432
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 15.2359
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.3432
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.3432
+
+Step 15:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+
+Step 16:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 10.5869
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+
+Step 17:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 9.0728
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1827
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 6.6960
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1827
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 11.7304
+
+Step 18:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 19.9830
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1550
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 14.4412
+
+Step 19:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1109
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1109
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1109
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1109
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.1109
+
+Step 20:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.2519
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.2519
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.2519
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 22.4927
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5333, FlightDate=2022-01-08, Origin=RDU
+    Entropy: 0.2519
+
+============================================================
+

@@ -1,0 +1,73 @@
+
+########################################
+BEGIN TRIAL easy-flight-0001
+#######################################
+Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be 13 types: 
+(1) Calculate[formula], which calculates the formula and returns the result.
+(2) RetrieveAgenda[keyword], which retrieves the agenda related to keyword.
+(3) RetrieveScirex[keyword], which retrieves machine learning papers' paragraphs related to keyword.
+(4) LoadDB[DBName], which loads the database DBName and returns the database. The DBName can be one of the following: flights/coffee/airbnb/yelp.
+(5) FilterDB[condition], which filters the database DBName by the column column_name the relation (e.g., =, >, etc.) and the value value, and returns the filtered database.
+(6) GetValue[column_name], which returns the value of the column column_name in the database DBName.
+(7) LoadGraph[GraphName], which loads the graph GraphName and returns the graph. The GraphName can be one of the following: PaperNet/AuthorNet.
+(8) NeighbourCheck[GraphName, Node], which lists the neighbours of the node Node in the graph GraphName and returns the neighbours. 
+(9) NodeCheck[GraphName, Node], which returns the detailed attribute information of Node. 
+(10) EdgeCheck[GraphName, Node1, Node2], which returns the detailed attribute information of the edge between Node1 and Node2. 
+(11) SQLInterpreter[SQL], which interprets the SQL query SQL and returns the result.
+(12) PythonInterpreter[Python], which interprets the Python code Python and returns the result.
+(13) Finish[answer], which returns the answer and finishes the task.
+You may take as many steps as necessary.
+Question: What was the departure time of the AA4869 flight from HHH to CLT on 2022-05-06? Only return the time in HH:MM format.
+Thought 1: We need to load the flights database.
+Action 1: LoadDB[flights]
+Observation 1: We have successfully loaded the flights database, including the following columns: FlightDate, Airline, Origin, Dest, Cancelled, Diverted, CRSDepTime, DepTime, DepDelayMinutes, DepDelay, ArrTime, ArrDelayMinutes, AirTime, CRSElapsedTime, ActualElapsedTime, Distance, Year, Quarter, Month, DayofMonth, DayOfWeek, Marketing_Airline_Network, Operated_or_Branded_Code_Share_Partners, DOT_ID_Marketing_Airline, IATA_Code_Marketing_Airline, Flight_Number_Marketing_Airline, Operating_Airline, DOT_ID_Operating_Airline, IATA_Code_Operating_Airline, Tail_Number, Flight_Number_Operating_Airline, OriginAirportID, OriginAirportSeqID, OriginCityMarketID, OriginCityName, OriginState, OriginStateFips, OriginStateName, OriginWac, DestAirportID, DestAirportSeqID, DestCityMarketID, DestCityName, DestState, DestStateFips, DestStateName, DestWac, DepDel15, DepartureDelayGroups, DepTimeBlk, TaxiOut, WheelsOff, WheelsOn, TaxiIn, CRSArrTime, ArrDelay, ArrDel15, ArrivalDelayGroups, ArrTimeBlk, DistanceGroup, DivAirportLandings.
+Thought 2: We need to filter the information related to the q
+Action 2: FilterDB[Flight_Number_Marketing_Airline=4869, FlightDate=2022-05-06, Origin=HHH, Dest=CLT]
+Observation 2: We have successfully filtered the data (1 rows).
+Thought 3: We then need to know the departure time.
+Action 3: GetValue[DepTime]
+Observation 3: 1216.0
+Thought 4: We need to convert the departure time to HH:MM for
+Action 4: Calculate[str(int(1216/100))+':'+str(int(1216%100)).zfill(2)]
+Observation 4: Illegal Mathematical Expression. Please try again.
+Thought 5: The departure time of the AA4869 flight from HHH to CLT on 2022-05-06 is 12:16.
+Action 5: Finish[12:16]
+Observation 5: Answer is CORRECT
+Correct answer: 12:16
+
+
+============================================================
+ACTION SAMPLES (All 2 samples per step)
+============================================================
+Step 1:
+  [SELECTED] Sample 0: LoadDB[flights]
+    Entropy: 0.2148
+  [discarded] Sample 1: LoadDB[flights]
+    Entropy: 0.2148
+
+Step 2:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=4869, FlightDate=2022-05-06, Origin=HHH
+    Entropy: 7.0485
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=4869, FlightDate=2022-05-06, Origin=HHH
+    Entropy: 5.7822
+
+Step 3:
+  [SELECTED] Sample 0: GetValue[DepTime]
+    Entropy: 4.4905
+  [discarded] Sample 1: GetValue[DepTime]
+    Entropy: 8.6530
+
+Step 4:
+  [SELECTED] Sample 0: Calculate[str(int(1216/100))+':'+str(int(1216%100)).zfill(2)]
+    Entropy: 2.5895
+  [discarded] Sample 1: Calculate[format(1216.0, '%H:%M')]
+    Entropy: 4.3945
+
+Step 5:
+  [SELECTED] Sample 0: Finish[12:16]
+    Entropy: 18.9878
+  [discarded] Sample 1: Finish[12:16]
+    Entropy: 59.3084
+
+============================================================
+

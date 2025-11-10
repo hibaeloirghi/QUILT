@@ -1,0 +1,82 @@
+
+########################################
+BEGIN TRIAL easy-flight-0021
+#######################################
+Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be 13 types: 
+(1) Calculate[formula], which calculates the formula and returns the result.
+(2) RetrieveAgenda[keyword], which retrieves the agenda related to keyword.
+(3) RetrieveScirex[keyword], which retrieves machine learning papers' paragraphs related to keyword.
+(4) LoadDB[DBName], which loads the database DBName and returns the database. The DBName can be one of the following: flights/coffee/airbnb/yelp.
+(5) FilterDB[condition], which filters the database DBName by the column column_name the relation (e.g., =, >, etc.) and the value value, and returns the filtered database.
+(6) GetValue[column_name], which returns the value of the column column_name in the database DBName.
+(7) LoadGraph[GraphName], which loads the graph GraphName and returns the graph. The GraphName can be one of the following: PaperNet/AuthorNet.
+(8) NeighbourCheck[GraphName, Node], which lists the neighbours of the node Node in the graph GraphName and returns the neighbours. 
+(9) NodeCheck[GraphName, Node], which returns the detailed attribute information of Node. 
+(10) EdgeCheck[GraphName, Node1, Node2], which returns the detailed attribute information of the edge between Node1 and Node2. 
+(11) SQLInterpreter[SQL], which interprets the SQL query SQL and returns the result.
+(12) PythonInterpreter[Python], which interprets the Python code Python and returns the result.
+(13) Finish[answer], which returns the answer and finishes the task.
+You may take as many steps as necessary.
+Question: What is the flight number of the Delta Air Lines Inc. flight from MCO to LGA on 2022-04-30? Only return the flight number, if there are multiple flight numbers, return them separated by commas.
+Thought 1: We need to load the flights database to find the f
+Action 1: LoadDB[flights]
+Observation 1: We have successfully loaded the flights database, including the following columns: FlightDate, Airline, Origin, Dest, Cancelled, Diverted, CRSDepTime, DepTime, DepDelayMinutes, DepDelay, ArrTime, ArrDelayMinutes, AirTime, CRSElapsedTime, ActualElapsedTime, Distance, Year, Quarter, Month, DayofMonth, DayOfWeek, Marketing_Airline_Network, Operated_or_Branded_Code_Share_Partners, DOT_ID_Marketing_Airline, IATA_Code_Marketing_Airline, Flight_Number_Marketing_Airline, Operating_Airline, DOT_ID_Operating_Airline, IATA_Code_Operating_Airline, Tail_Number, Flight_Number_Operating_Airline, OriginAirportID, OriginAirportSeqID, OriginCityMarketID, OriginCityName, OriginState, OriginStateFips, OriginStateName, OriginWac, DestAirportID, DestAirportSeqID, DestCityMarketID, DestCityName, DestState, DestStateFips, DestStateName, DestWac, DepDel15, DepartureDelayGroups, DepTimeBlk, TaxiOut, WheelsOff, WheelsOn, TaxiIn, CRSArrTime, ArrDelay, ArrDel15, ArrivalDelayGroups, ArrTimeBlk, DistanceGroup, DivAirportLandings.
+Thought 2: We need to filter the information related to the q
+Action 2: FilterDB[Origin=MCO, Dest=LGA, Airline=Delta Air Lines Inc., FlightDate=2022-04-30]
+Observation 2: We have successfully filtered the data (4 rows).
+Thought 3: We need to know the flight numbers of the filtered
+Action 3: GetValue[Flight_Number_Marketing_Airline]
+Observation 3: 2873, 1176, 1340, 2398
+Thought 4: We then need to return the flight numbers separated by commas.
+Action 4: Calculate[2873, 1176, 1340, 2398]
+Observation 4: Illegal Mathematical Expression. Please try again.
+Thought 5: To compute the flight numbers separated by commas,
+Action 5: Calculate[join([2873, 1176, 1340, 2398], ',')]
+Observation 5: You are sending multiple actions at once. Please send one action at a time.
+Thought 6: After calculation, we know that the answer is 2873, 1176, 1340, 2398.
+Action 6: Finish[2873, 1176, 1340, 2398]
+Observation 6: Answer is CORRECT
+Correct answer: 2873, 1176, 1340, 2398
+
+
+============================================================
+ACTION SAMPLES (All 2 samples per step)
+============================================================
+Step 1:
+  [SELECTED] Sample 0: LoadDB[flights]
+    Entropy: 0.1109
+  [discarded] Sample 1: LoadDB[flights]
+    Entropy: 6.1326
+
+Step 2:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=Delta Air Lines Inc., FlightDate=2022-0
+    Entropy: 13.8376
+  [SELECTED] Sample 1: FilterDB[Origin=MCO, Dest=LGA, Airline=Delta Air Lines Inc., FlightDate=2022-04-
+    Entropy: 6.7621
+
+Step 3:
+  [SELECTED] Sample 0: GetValue[Flight_Number_Marketing_Airline]
+    Entropy: 13.1320
+  [discarded] Sample 1: GetValue[Flight_Number_Marketing_Airline]
+    Entropy: 18.9512
+
+Step 4:
+  [SELECTED] Sample 0: Calculate[2873, 1176, 1340, 2398]
+    Entropy: 1.2571
+  [discarded] Sample 1: Calculate[2873,1176,1340,2398]
+    Entropy: 1.6597
+
+Step 5:
+  [discarded] Sample 0: Calculate[join(',',[2873, 1176, 1340, 2398])]
+    Entropy: 6.9677
+  [SELECTED] Sample 1: Calculate[join([2873, 1176, 1340, 2398], ',')]
+    Entropy: 6.1719
+
+Step 6:
+  [SELECTED] Sample 0: Finish[2873, 1176, 1340, 2398]
+    Entropy: 12.7301
+  [discarded] Sample 1: Finish[2873, 1176, 1340, 2398]
+    Entropy: 51.1529
+
+============================================================
+

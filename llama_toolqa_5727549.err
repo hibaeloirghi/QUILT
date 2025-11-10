@@ -1,0 +1,5 @@
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:12<00:37, 12.43s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:24<00:24, 12.28s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:36<00:12, 12.19s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:39<00:00,  8.56s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:39<00:00,  9.92s/it]
+Device set to use cuda:0
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+/var/spool/slurm/slurmd.spool/job5727549/slurm_script: line 132: 793796 Killed                  python benchmark/LLaMA/code/test_llama_react.py "${CMD_ARGS[@]}"
+slurmstepd: error: Detected 1 oom_kill event in StepId=5727549.batch. Some of the step tasks have been OOM Killed.

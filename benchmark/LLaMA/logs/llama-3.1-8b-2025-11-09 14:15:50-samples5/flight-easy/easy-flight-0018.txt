@@ -1,0 +1,328 @@
+
+########################################
+BEGIN TRIAL easy-flight-0018
+#######################################
+Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be 13 types: 
+(1) Calculate[formula], which calculates the formula and returns the result.
+(2) RetrieveAgenda[keyword], which retrieves the agenda related to keyword.
+(3) RetrieveScirex[keyword], which retrieves machine learning papers' paragraphs related to keyword.
+(4) LoadDB[DBName], which loads the database DBName and returns the database. The DBName can be one of the following: flights/coffee/airbnb/yelp.
+(5) FilterDB[condition], which filters the database DBName by the column column_name the relation (e.g., =, >, etc.) and the value value, and returns the filtered database.
+(6) GetValue[column_name], which returns the value of the column column_name in the database DBName.
+(7) LoadGraph[GraphName], which loads the graph GraphName and returns the graph. The GraphName can be one of the following: PaperNet/AuthorNet.
+(8) NeighbourCheck[GraphName, Node], which lists the neighbours of the node Node in the graph GraphName and returns the neighbours. 
+(9) NodeCheck[GraphName, Node], which returns the detailed attribute information of Node. 
+(10) EdgeCheck[GraphName, Node1, Node2], which returns the detailed attribute information of the edge between Node1 and Node2. 
+(11) SQLInterpreter[SQL], which interprets the SQL query SQL and returns the result.
+(12) PythonInterpreter[Python], which interprets the Python code Python and returns the result.
+(13) Finish[answer], which returns the answer and finishes the task.
+You may take as many steps as necessary.
+Question: Was the flight AA5566 from CLT to LEX cancelled on 2022-01-20? Only return 'Yes' or 'No'.
+Thought 1: This is a question related to flights
+Action 1: LoadDB[flights]
+Observation 1: We have successfully loaded the flights database, including the following columns: FlightDate, Airline, Origin, Dest, Cancelled, Diverted, CRSDepTime, DepTime, DepDelayMinutes, DepDelay, ArrTime, ArrDelayMinutes, AirTime, CRSElapsedTime, ActualElapsedTime, Distance, Year, Quarter, Month, DayofMonth, DayOfWeek, Marketing_Airline_Network, Operated_or_Branded_Code_Share_Partners, DOT_ID_Marketing_Airline, IATA_Code_Marketing_Airline, Flight_Number_Marketing_Airline, Operating_Airline, DOT_ID_Operating_Airline, IATA_Code_Operating_Airline, Tail_Number, Flight_Number_Operating_Airline, OriginAirportID, OriginAirportSeqID, OriginCityMarketID, OriginCityName, OriginState, OriginStateFips, OriginStateName, OriginWac, DestAirportID, DestAirportSeqID, DestCityMarketID, DestCityName, DestState, DestStateFips, DestStateName, DestWac, DepDel15, DepartureDelayGroups, DepTimeBlk, TaxiOut, WheelsOff, WheelsOn, TaxiIn, CRSArrTime, ArrDelay, ArrDel15, ArrivalDelayGroups, ArrTimeBlk, DistanceGroup, DivAirportLandings.
+Thought 2: We need to filter the information related to the q
+Action 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 2: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 3: We should use Cancelled=True instead of Cancelled=False
+Action 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 3: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 4: We should use Cancelled=True instead of Cancelled=False
+Action 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 4: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 5: We should use Cancelled=True instead of Cancelled=False
+Action 5: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 5: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 6: We should use Cancelled=True instead of Cancelled=False
+Action 6: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2021-01-20, Cancelled=True]
+Observation 6: The filtering query FlightDate=2021-01-20 is incorrect. Please modify the condition.
+Thought 7: We should use FlightDate=2022-01-20 instead of FlightDate=2021-01-20
+Action 7: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 7: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 8: We should use Cancelled=True instead of Cancelled=False
+Action 8: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 8: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 9: We should use Cancelled=True instead of Cancelled=False
+Action 9: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 9: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 10: We should use Cancelled=True instead of Cancelled=False
+Action 10: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 10: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 11: We should use Cancelled=True instead of Cancelled=False
+Action 11: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 11: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 12: We should use Cancelled=True instead of Cancelled=False
+Action 12: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 12: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 13: We should use Cancelled=True instead of Cancelled=False
+Action 13: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 13: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 14: We should use Cancelled=True instead of Cancelled=False
+Action 14: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 14: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 15: We should use Cancelled=True instead of Cancelled=False
+Action 15: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 15: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 16: We should use Cancelled=True instead of Cancelled=False
+Action 16: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 16: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 17: We should use Cancelled=True instead of Cancelled=False
+Action 17: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 17: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 18: We should use Cancelled=True instead of Cancelled=False
+Action 18: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 18: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 19: We should use Cancelled=True instead of Cancelled=False
+Action 19: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 19: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Thought 20: We should use Cancelled=True instead of Cancelled=False
+Action 20: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=True]
+Observation 20: The filtering query Cancelled=True is incorrect. Please modify the condition.
+Correct answer: No
+
+
+============================================================
+ACTION SAMPLES (All 5 samples per step)
+============================================================
+Step 1:
+  [discarded] Sample 0: LoadDB[flights]
+    Entropy: 15.3862
+  [discarded] Sample 1: LoadDB[flights]
+    Entropy: 5.8678
+  [SELECTED] Sample 2: LoadDB[flights]
+    Entropy: 0.7287
+  [discarded] Sample 3: LoadDB[flights]
+    Entropy: 12.0363
+  [discarded] Sample 4: LoadDB[flights]
+    Entropy: 1.0859
+
+Step 2:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Origin=CLT
+    Entropy: 10.2251
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Origin=CLT
+    Entropy: 6.4047
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Origin=CLT
+    Entropy: 23.6195
+  [SELECTED] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 6.4042
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Origin=CLT
+    Entropy: 7.9601
+
+Step 3:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 27.8168
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 14.8332
+  [SELECTED] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 8.8008
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 21.7644
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 45.2716
+
+Step 4:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 16.0505
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 17.9030
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 24.6643
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 29.0012
+  [SELECTED] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 11.1893
+
+Step 5:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 13.2052
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 23.5311
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 20.3255
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 7.9719
+  [SELECTED] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 6.4997
+
+Step 6:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 19.8087
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2021-01-20, Cancelled=
+    Entropy: 15.4147
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 7.5092
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2021-01-20, Cancelled=
+    Entropy: 15.0397
+  [SELECTED] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2021-01-20, Cancelled=
+    Entropy: 3.1773
+
+Step 7:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 23.7034
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 4.0442
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 24.2333
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 5.7563
+  [SELECTED] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 3.2719
+
+Step 8:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 33.4134
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 3.0327
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 21.4619
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 29.2702
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 6.7608
+
+Step 9:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 14.9427
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 5.1496
+  [SELECTED] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.9543
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 12.9869
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 24.8356
+
+Step 10:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightNumber=AA, FlightDate=2022-
+    Entropy: 10.0026
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 1.2885
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightNumber=2022-01-20, Cancelle
+    Entropy: 2.2344
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightNumber_Operating_Airline=55
+    Entropy: 6.1558
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 1.2885
+
+Step 11:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.6599
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.6599
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.6599
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 28.7369
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.6599
+
+Step 12:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.7864
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.7864
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.7864
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 5.4110
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 31.5722
+
+Step 13:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 26.9882
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 14.0126
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 32.2036
+  [SELECTED] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.6078
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.6078
+
+Step 14:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.4607
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 32.1477
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 17.1609
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 20.2099
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.4607
+
+Step 15:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 6.7106
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 24.3505
+  [SELECTED] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2945
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 16.0387
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 18.2010
+
+Step 16:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2945
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 6.6008
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2945
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2945
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2945
+
+Step 17:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2519
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2519
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2519
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2519
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2519
+
+Step 18:
+  [discarded] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 11.4380
+  [SELECTED] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2945
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2945
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2945
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.2945
+
+Step 19:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.1109
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.1109
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.1109
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.1109
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.1109
+
+Step 20:
+  [SELECTED] Sample 0: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.3985
+  [discarded] Sample 1: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.3985
+  [discarded] Sample 2: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 17.4229
+  [discarded] Sample 3: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 24.5121
+  [discarded] Sample 4: FilterDB[Flight_Number_Marketing_Airline=5566, FlightDate=2022-01-20, Cancelled=
+    Entropy: 0.3985
+
+============================================================
+
