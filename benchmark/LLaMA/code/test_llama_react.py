@@ -257,6 +257,17 @@ else:
     agents = []
     unanswered_questions = []
     
+    # Check for existing entropy files to skip already processed questions
+    existing_entropy_files = set()
+    if os.path.exists(args.output_dir):
+        import glob
+        entropy_files = glob.glob(os.path.join(args.output_dir, '*_entropy.json'))
+        for ef in entropy_files:
+            qid = os.path.basename(ef).replace('_entropy.json', '')
+            existing_entropy_files.add(qid)
+        if existing_entropy_files:
+            print(f"Found {len(existing_entropy_files)} existing entropy files. Will skip these questions.")
+    
     # If debug mode, only process one question
     if args.debug:
         indices = [args.debug_id] if args.debug_id < len(contents) else [0]
@@ -271,6 +282,14 @@ else:
             print(f"Processing all {len(contents)} questions")
     
     for i in indices:
+        qid = contents[i]['qid']
+        
+        # Skip if entropy file already exists
+        if qid in existing_entropy_files:
+            print(f"\n{'='*60}")
+            print(f"Skipping {i+1}/{len(contents)}: {qid} (entropy file already exists)")
+            print(f"{'='*60}\n")
+            continue
         qid = contents[i]['qid']
         question = contents[i]['question']
         answer = contents[i]['answer']

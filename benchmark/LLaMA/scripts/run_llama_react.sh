@@ -55,6 +55,7 @@ MAX_STEPS=20
 MAX_QUESTIONS="${4:-50}"  # Number of questions to process (default: 50)
 NUM_ACTION_SAMPLES="${5:-5}"  # Number of action samples (default: 5, use 1 for no sampling)
 NUM_ANSWER_SAMPLES="${6:-10}"  # Number of final answer samples for entropy (default: 10, use 0 to disable)
+OUTPUT_DIR="${7:-}"  # Optional: output directory (if not specified, will create new one with timestamp)
 
 # Optional: WolframAlpha API key for calculator tool
 # WOLFRAMALPHA_API_KEY="your_key_here"
@@ -72,6 +73,9 @@ echo "  Max steps: $MAX_STEPS"
 echo "  Max questions: $MAX_QUESTIONS"
 echo "  Num action samples: $NUM_ACTION_SAMPLES"
 echo "  Num answer samples: $NUM_ANSWER_SAMPLES"
+if [ ! -z "$OUTPUT_DIR" ]; then
+    echo "  Output directory: $OUTPUT_DIR (will skip existing entropy files)"
+fi
 echo ""
 
 # Check if question file exists
@@ -97,6 +101,11 @@ CMD_ARGS=(
     --num_action_samples "$NUM_ACTION_SAMPLES"
     --num_answer_samples "$NUM_ANSWER_SAMPLES"
 )
+
+# Add output_dir if specified
+if [ ! -z "$OUTPUT_DIR" ]; then
+    CMD_ARGS+=(--output_dir "$OUTPUT_DIR")
+fi
 
 # Add debug flags if specified (for testing single questions)
 if [ ! -z "$DEBUG" ] && [ "$DEBUG" = "1" ]; then
