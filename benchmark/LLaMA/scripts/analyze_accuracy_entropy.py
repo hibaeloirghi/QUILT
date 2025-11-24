@@ -18,12 +18,24 @@ matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def load_entropy_data(directory: str) -> Dict[str, Dict]:
-    """Load all entropy JSON files from a directory"""
+def load_entropy_data(directory: str, max_questions: int = None) -> Dict[str, Dict]:
+    """Load all entropy JSON files from a directory
+    
+    Args:
+        directory: Directory containing entropy JSON files
+        max_questions: Maximum number of questions to load (None = all)
+    """
     data = {}
     entropy_files = glob.glob(os.path.join(directory, "*_entropy.json"))
     
-    for file_path in sorted(entropy_files):
+    # Sort files by question ID to ensure consistent ordering
+    sorted_files = sorted(entropy_files)
+    
+    # Limit to first N questions if specified
+    if max_questions is not None:
+        sorted_files = sorted_files[:max_questions]
+    
+    for file_path in sorted_files:
         qid = os.path.basename(file_path).replace("_entropy.json", "")
         try:
             with open(file_path, 'r') as f:
@@ -1151,6 +1163,8 @@ def main():
                        help='Output file for detailed results (JSON)')
     parser.add_argument('--plot_dir', type=str, default=None,
                        help='Directory to save plots (if not specified, plots saved to output directory)')
+    parser.add_argument('--max_questions', type=int, default=None,
+                       help='Maximum number of questions to analyze per condition (None = all)')
     
     args = parser.parse_args()
     
@@ -1163,7 +1177,7 @@ def main():
     conditions = []
     
     # Load no-sampling (always required)
-    no_sampling_data = load_entropy_data(args.no_sampling_dir)
+    no_sampling_data = load_entropy_data(args.no_sampling_dir, max_questions=args.max_questions)
     conditions.append(('no-sampling', args.no_sampling_dir, no_sampling_data))
     print(f"Loaded {len(no_sampling_data)} examples from no-sampling")
     
@@ -1171,7 +1185,7 @@ def main():
     samples5_data = None
     samples5_dir = None
     if args.samples5_dir:
-        samples5_data = load_entropy_data(args.samples5_dir)
+        samples5_data = load_entropy_data(args.samples5_dir, max_questions=args.max_questions)
         conditions.append(('samples5', args.samples5_dir, samples5_data))
         print(f"Loaded {len(samples5_data)} examples from samples5")
     
@@ -1179,7 +1193,7 @@ def main():
     samples2_data = None
     samples2_dir = None
     if args.samples2_dir:
-        samples2_data = load_entropy_data(args.samples2_dir)
+        samples2_data = load_entropy_data(args.samples2_dir, max_questions=args.max_questions)
         conditions.append(('samples2', args.samples2_dir, samples2_data))
         print(f"Loaded {len(samples2_data)} examples from samples2")
     
