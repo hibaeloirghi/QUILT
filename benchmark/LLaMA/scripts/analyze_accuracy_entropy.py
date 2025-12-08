@@ -8,7 +8,6 @@ import json
 import os
 import glob
 import numpy as np
-import pandas as pd
 from pathlib import Path
 from typing import Dict, List, Tuple
 from collections import defaultdict
@@ -17,6 +16,8 @@ import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy import stats
+from scipy.stats import ttest_ind, mannwhitneyu, chi2_contingency
 
 def load_entropy_data(directory: str, max_questions: int = None) -> Dict[str, Dict]:
     """Load all entropy JSON files from a directory
@@ -122,6 +123,8 @@ def analyze_condition(data: Dict[str, Dict], condition_name: str) -> Dict:
         'discarded_action_entropies': [],  # Only discarded action entropies
         'tool_entropies': [],
         'steps_per_question': [],  # Number of steps per question
+        'llm_calls_per_question': [],  # Total LLM calls per question (for computational cost)
+        'action_samples_per_question': [],  # Number of action samples used (1, 2, or 5)
     }
     
     for qid, entry in data.items():
@@ -201,9 +204,23 @@ def analyze_condition(data: Dict[str, Dict], condition_name: str) -> Dict:
         action_samples = entry.get('action_samples', [])
         
         # Count number of steps for this question (max step number from action_samples)
+        # Also compute computational cost (LLM calls)
         if action_samples:
             max_step = max([action.get('step', 0) for action in action_samples])
             results['steps_per_question'].append(max_step)
+            
+            # Compute computational cost: each step samples multiple actions
+            # Estimate num_action_samples from the number of samples in first action
+            num_action_samples = len(action_samples[0].get('samples', [])) if action_samples else 1
+            if num_action_samples == 0:
+                num_action_samples = 1  # Fallback
+            
+            # LLM calls = steps * num_action_samples (for actions) + num_answer_samples (for final answer)
+            # We estimate num_answer_samples from answer_logprobs if available
+            num_answer_samples = len(entry.get('answer_logprobs', []))
+            total_llm_calls = max_step * num_action_samples + num_answer_samples
+            results['llm_calls_per_question'].append(total_llm_calls)
+            results['action_samples_per_question'].append(num_action_samples)
         else:
             # If no action_samples, try to infer from step_entropies (already loaded above)
             if step_entropies:
@@ -211,6 +228,11 @@ def analyze_condition(data: Dict[str, Dict], condition_name: str) -> Dict:
                 if step_nums:
                     max_step = max(step_nums)
                     results['steps_per_question'].append(max_step)
+                    # Estimate LLM calls (assume 1 sample per step if no action_samples data)
+                    num_answer_samples = len(entry.get('answer_logprobs', []))
+                    total_llm_calls = max_step * 1 + num_answer_samples
+                    results['llm_calls_per_question'].append(total_llm_calls)
+                    results['action_samples_per_question'].append(1)
         
         for action in action_samples:
             selected_entropy = action.get('selected_entropy')
@@ -238,17 +260,104 @@ def analyze_condition(data: Dict[str, Dict], condition_name: str) -> Dict:
     return results
 
 def compute_statistics(values: List[float]) -> Dict:
-    """Compute statistics for a list of values"""
+    """Compute statistics for a list of values including confidence intervals"""
     if not values or len(values) == 0:
-        return {'mean': None, 'median': None, 'std': None, 'min': None, 'max': None, 'count': 0}
+        return {'mean': None, 'median': None, 'std': None, 'min': None, 'max': None, 'count': 0,
+                'ci_lower': None, 'ci_upper': None, 'sem': None}
+    
+    values_array = np.array(values)
+    n = len(values)
+    mean = np.mean(values_array)
+    std = np.std(values_array, ddof=1)  # Sample standard deviation
+    sem = std / np.sqrt(n)  # Standard error of the mean
+    
+    # 95% confidence interval using t-distribution
+    if n > 1:
+        t_critical = stats.t.ppf(0.975, df=n-1)  # 95% CI, two-tailed
+        ci_lower = mean - t_critical * sem
+        ci_upper = mean + t_critical * sem
+    else:
+        ci_lower = ci_upper = mean
     
     return {
-        'mean': np.mean(values),
-        'median': np.median(values),
-        'std': np.std(values),
-        'min': np.min(values),
-        'max': np.max(values),
-        'count': len(values)
+        'mean': mean,
+        'median': np.median(values_array),
+        'std': std,
+        'sem': sem,
+        'min': np.min(values_array),
+        'max': np.max(values_array),
+        'count': n,
+        'ci_lower': ci_lower,
+        'ci_upper': ci_upper
+    }
+
+def compute_binomial_ci(successes: int, total: int, confidence: float = 0.95) -> Tuple[float, float]:
+    """Compute confidence interval for binomial proportion (accuracy)"""
+    if total == 0:
+        return (0.0, 0.0)
+    
+    p = successes / total
+    z = stats.norm.ppf((1 + confidence) / 2)
+    margin = z * np.sqrt(p * (1 - p) / total)
+    return (max(0, p - margin), min(1, p + margin))
+
+def statistical_test_accuracy(no_sampling: Dict, samples2: Dict = None, samples5: Dict = None) -> Dict:
+    """Perform statistical tests on accuracy (binomial proportions)"""
+    results = {}
+    
+    # Convert to binary outcomes for each question
+    no_correct = no_sampling['correct']
+    no_total = no_sampling['total']
+    no_incorrect = no_total - no_correct
+    
+    # Chi-square test for independence
+    if samples2:
+        s2_correct = samples2['correct']
+        s2_total = samples2['total']
+        s2_incorrect = s2_total - s2_correct
+        
+        contingency = np.array([[no_correct, no_incorrect],
+                               [s2_correct, s2_incorrect]])
+        chi2, p_val_chi2, dof, expected = chi2_contingency(contingency)
+        results['no_vs_samples2'] = {
+            'chi2': chi2,
+            'p_value': p_val_chi2,
+            'significant': p_val_chi2 < 0.05
+        }
+    
+    if samples5:
+        s5_correct = samples5['correct']
+        s5_total = samples5['total']
+        s5_incorrect = s5_total - s5_correct
+        
+        contingency = np.array([[no_correct, no_incorrect],
+                               [s5_correct, s5_incorrect]])
+        chi2, p_val_chi2, dof, expected = chi2_contingency(contingency)
+        results['no_vs_samples5'] = {
+            'chi2': chi2,
+            'p_value': p_val_chi2,
+            'significant': p_val_chi2 < 0.05
+        }
+    
+    return results
+
+def statistical_test_continuous(no_vals: List[float], other_vals: List[float], test_name: str = "") -> Dict:
+    """Perform statistical tests on continuous variables"""
+    if not no_vals or not other_vals or len(no_vals) < 2 or len(other_vals) < 2:
+        return {'test': 'insufficient_data'}
+    
+    # T-test (assumes normality)
+    t_stat, p_val_t = ttest_ind(no_vals, other_vals)
+    
+    # Mann-Whitney U test (non-parametric, doesn't assume normality)
+    u_stat, p_val_u = mannwhitneyu(no_vals, other_vals, alternative='two-sided')
+    
+    return {
+        'test_name': test_name,
+        't_test': {'statistic': t_stat, 'p_value': p_val_t, 'significant': p_val_t < 0.05},
+        'mann_whitney': {'statistic': u_stat, 'p_value': p_val_u, 'significant': p_val_u < 0.05},
+        'n_no_sampling': len(no_vals),
+        'n_other': len(other_vals)
     }
 
 def print_comparison(no_sampling: Dict, samples5: Dict):
@@ -455,15 +564,51 @@ def print_comparison_threeway(no_sampling: Dict, samples2: Dict = None, samples5
         print(f" {format_val(samples5['incorrect'])}", end="")
     print()
     
+    # Accuracy with confidence intervals
+    no_ci = compute_binomial_ci(no_sampling['correct'], no_sampling['total'])
     acc_no = f"{no_sampling['accuracy']:.4f} ({no_sampling['accuracy']*100:.2f}%)"
-    acc_s2 = f"{samples2['accuracy']:.4f} ({samples2['accuracy']*100:.2f}%)" if samples2 else None
-    acc_s5 = f"{samples5['accuracy']:.4f} ({samples5['accuracy']*100:.2f}%)" if samples5 else None
+    acc_no_ci = f"[{no_ci[0]:.2%}, {no_ci[1]:.2%}]"
+    
+    acc_s2 = None
+    acc_s2_ci = None
+    if samples2:
+        s2_ci = compute_binomial_ci(samples2['correct'], samples2['total'])
+        acc_s2 = f"{samples2['accuracy']:.4f} ({samples2['accuracy']*100:.2f}%)"
+        acc_s2_ci = f"[{s2_ci[0]:.2%}, {s2_ci[1]:.2%}]"
+    
+    acc_s5 = None
+    acc_s5_ci = None
+    if samples5:
+        s5_ci = compute_binomial_ci(samples5['correct'], samples5['total'])
+        acc_s5 = f"{samples5['accuracy']:.4f} ({samples5['accuracy']*100:.2f}%)"
+        acc_s5_ci = f"[{s5_ci[0]:.2%}, {s5_ci[1]:.2%}]"
+    
     print(f"{'Accuracy':<30} {format_val(acc_no)}", end="")
     if samples2:
         print(f" {format_val(acc_s2)}", end="")
     if samples5:
         print(f" {format_val(acc_s5)}", end="")
     print()
+    print(f"{'95% CI':<30} {format_val(acc_no_ci)}", end="")
+    if samples2:
+        print(f" {format_val(acc_s2_ci)}", end="")
+    if samples5:
+        print(f" {format_val(acc_s5_ci)}", end="")
+    print()
+    
+    # Statistical significance tests
+    stat_tests = statistical_test_accuracy(no_sampling, samples2, samples5)
+    if stat_tests:
+        print(f"\n{'Statistical Tests (Chi-square)':<30}", end="")
+        if 'no_vs_samples2' in stat_tests:
+            test = stat_tests['no_vs_samples2']
+            sig = "***" if test['p_value'] < 0.001 else "**" if test['p_value'] < 0.01 else "*" if test['p_value'] < 0.05 else "ns"
+            print(f" No vs Samples2: p={test['p_value']:.4f} {sig}", end="")
+        if 'no_vs_samples5' in stat_tests:
+            test = stat_tests['no_vs_samples5']
+            sig = "***" if test['p_value'] < 0.001 else "**" if test['p_value'] < 0.01 else "*" if test['p_value'] < 0.05 else "ns"
+            print(f" No vs Samples5: p={test['p_value']:.4f} {sig}", end="")
+        print("\n  (* p<0.05, ** p<0.01, *** p<0.001, ns=not significant)")
     print()
     
     # Action entropies (key metric)
@@ -509,9 +654,9 @@ def print_comparison_threeway(no_sampling: Dict, samples2: Dict = None, samples5
     s2_steps = samples2.get('steps_per_question', []) if samples2 else []
     s5_steps = samples5.get('steps_per_question', []) if samples5 else []
     
-    no_steps_stats = compute_statistics(no_steps) if no_steps else {'mean': None, 'std': None, 'count': 0}
-    s2_steps_stats = compute_statistics(s2_steps) if s2_steps else {'mean': None, 'std': None, 'count': 0}
-    s5_steps_stats = compute_statistics(s5_steps) if s5_steps else {'mean': None, 'std': None, 'count': 0}
+    no_steps_stats = compute_statistics(no_steps) if no_steps else {'mean': None, 'std': None, 'count': 0, 'ci_lower': None, 'ci_upper': None}
+    s2_steps_stats = compute_statistics(s2_steps) if s2_steps else {'mean': None, 'std': None, 'count': 0, 'ci_lower': None, 'ci_upper': None}
+    s5_steps_stats = compute_statistics(s5_steps) if s5_steps else {'mean': None, 'std': None, 'count': 0, 'ci_lower': None, 'ci_upper': None}
     
     no_steps_str = f"{no_steps_stats['mean']:.2f} ± {no_steps_stats['std']:.2f} (n={no_steps_stats['count']})" if no_steps_stats['mean'] is not None else "N/A"
     s2_steps_str = f"{s2_steps_stats['mean']:.2f} ± {s2_steps_stats['std']:.2f} (n={s2_steps_stats['count']})" if s2_steps_stats['mean'] is not None else "N/A"
@@ -523,6 +668,48 @@ def print_comparison_threeway(no_sampling: Dict, samples2: Dict = None, samples5
     if samples5:
         print(f" {format_val(s5_steps_str)}", end="")
     print()
+    
+    # Computational cost (LLM calls)
+    print("\nCOMPUTATIONAL COST (LLM Calls per Question)")
+    print("-" * 100)
+    print(header)
+    print("-" * 100)
+    
+    no_llm = no_sampling.get('llm_calls_per_question', [])
+    s2_llm = samples2.get('llm_calls_per_question', []) if samples2 else []
+    s5_llm = samples5.get('llm_calls_per_question', []) if samples5 else []
+    
+    no_llm_stats = compute_statistics(no_llm) if no_llm else {'mean': None, 'std': None, 'count': 0, 'ci_lower': None, 'ci_upper': None}
+    s2_llm_stats = compute_statistics(s2_llm) if s2_llm else {'mean': None, 'std': None, 'count': 0, 'ci_lower': None, 'ci_upper': None}
+    s5_llm_stats = compute_statistics(s5_llm) if s5_llm else {'mean': None, 'std': None, 'count': 0, 'ci_lower': None, 'ci_upper': None}
+    
+    no_llm_str = f"{no_llm_stats['mean']:.1f} ± {no_llm_stats['std']:.1f} (n={no_llm_stats['count']})" if no_llm_stats['mean'] is not None else "N/A"
+    s2_llm_str = f"{s2_llm_stats['mean']:.1f} ± {s2_llm_stats['std']:.1f} (n={s2_llm_stats['count']})" if s2_llm_stats['mean'] is not None else "N/A"
+    s5_llm_str = f"{s5_llm_stats['mean']:.1f} ± {s5_llm_stats['std']:.1f} (n={s5_llm_stats['count']})" if s5_llm_stats['mean'] is not None else "N/A"
+    
+    print(f"{'Avg LLM Calls per Question':<30} {format_val(no_llm_str)}", end="")
+    if samples2:
+        print(f" {format_val(s2_llm_str)}", end="")
+    if samples5:
+        print(f" {format_val(s5_llm_str)}", end="")
+    print()
+    
+    # Cost efficiency (accuracy per LLM call)
+    if no_llm_stats['mean'] and s2_llm_stats['mean']:
+        no_efficiency = no_sampling['accuracy'] / no_llm_stats['mean'] if no_llm_stats['mean'] > 0 else 0
+        s2_efficiency = samples2['accuracy'] / s2_llm_stats['mean'] if s2_llm_stats['mean'] > 0 else 0
+        s5_efficiency = samples5['accuracy'] / s5_llm_stats['mean'] if s5_llm_stats['mean'] > 0 else 0
+        
+        no_eff_str = f"{no_efficiency:.4f}"
+        s2_eff_str = f"{s2_efficiency:.4f}" if samples2 else None
+        s5_eff_str = f"{s5_efficiency:.4f}" if samples5 else None
+        
+        print(f"{'Efficiency (Acc/LLM Call)':<30} {format_val(no_eff_str)}", end="")
+        if samples2:
+            print(f" {format_val(s2_eff_str)}", end="")
+        if samples5:
+            print(f" {format_val(s5_eff_str)}", end="")
+        print()
     print()
     
     print("=" * 80)
@@ -876,6 +1063,14 @@ def create_plots_threeway(no_sampling: Dict, samples2: Dict = None, samples5: Di
     os.makedirs(output_dir, exist_ok=True)
     sns.set_style("whitegrid")
     plt.rcParams['figure.figsize'] = (12, 8)
+    # Increase font sizes globally
+    plt.rcParams['font.size'] = 14
+    plt.rcParams['axes.titlesize'] = 16
+    plt.rcParams['axes.labelsize'] = 14
+    plt.rcParams['xtick.labelsize'] = 12
+    plt.rcParams['ytick.labelsize'] = 12
+    plt.rcParams['legend.fontsize'] = 12
+    plt.rcParams['figure.titlesize'] = 18
     
     # Extract sample types
     sample2_type = 'samples2'
@@ -901,17 +1096,37 @@ def create_plots_threeway(no_sampling: Dict, samples2: Dict = None, samples5: Di
         accuracies.append(samples5['accuracy'])
         colors.append('#e74c3c')
     
-    bars = ax.bar(conditions, accuracies, color=colors, alpha=0.7, edgecolor='black', linewidth=1.5)
-    ax.set_ylabel('Accuracy', fontsize=12, fontweight='bold')
+    # Compute confidence intervals for accuracy
+    acc_cis = []
+    for i in range(len(conditions)):
+        if i == 0:
+            ci = compute_binomial_ci(no_sampling['correct'], no_sampling['total'])
+        elif samples2 and i == 1:
+            ci = compute_binomial_ci(samples2['correct'], samples2['total'])
+        else:
+            ci = compute_binomial_ci(samples5['correct'], samples5['total'])
+        acc_cis.append(ci)
+    
+    # Error bars for confidence intervals
+    ci_errors = [[acc - ci[0], ci[1] - acc] for acc, ci in zip(accuracies, acc_cis)]
+    
+    bars = ax.bar(conditions, accuracies, color=colors, alpha=0.7, edgecolor='black', linewidth=2)
+    # Add error bars with custom styling
+    for i, (bar, acc, ci) in enumerate(zip(bars, accuracies, acc_cis)):
+        x_pos = bar.get_x() + bar.get_width()/2
+        height = bar.get_height()
+        ax.errorbar(x_pos, height, yerr=[[height - ci[0]], [ci[1] - height]], 
+                   fmt='none', color='black', capsize=8, capthick=2, linewidth=2)
+    ax.set_ylabel('Accuracy', fontsize=16, fontweight='bold')
     ax.set_ylim([0, 1])
-    ax.set_title('Accuracy Comparison: Three-Way', fontsize=14, fontweight='bold')
-    for i, (bar, acc) in enumerate(zip(bars, accuracies)):
+    ax.set_title('Accuracy Comparison: Three-Way', fontsize=18, fontweight='bold')
+    for i, (bar, acc, ci) in enumerate(zip(bars, accuracies, acc_cis)):
         height = bar.get_height()
         total = no_sampling['total'] if i == 0 else (samples2['total'] if samples2 and i == 1 else samples5['total'])
         correct = no_sampling['correct'] if i == 0 else (samples2['correct'] if samples2 and i == 1 else samples5['correct'])
-        ax.text(bar.get_x() + bar.get_width()/2., height + 0.02,
-                f'{acc:.1%}\n({correct}/{total})',
-                ha='center', va='bottom', fontsize=11, fontweight='bold')
+        ax.text(bar.get_x() + bar.get_width()/2., height + (ci[1] - acc) + 0.03,
+                f'{acc:.1%}\n[{ci[0]:.1%}, {ci[1]:.1%}]\n({correct}/{total})',
+                ha='center', va='bottom', fontsize=12, fontweight='bold')
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, '1_accuracy_comparison_threeway.png'), dpi=300, bbox_inches='tight')
     plt.close()
@@ -948,8 +1163,8 @@ def create_plots_threeway(no_sampling: Dict, samples2: Dict = None, samples5: Di
         for i, patch in enumerate(bp['boxes']):
             patch.set_facecolor(colors_to_plot[i])
             patch.set_alpha(0.7)
-        ax.set_ylabel('Action Entropy (All Samples)', fontsize=12, fontweight='bold')
-        ax.set_title('All Action Sample Entropy Comparison (Three-Way)', fontsize=14, fontweight='bold')
+        ax.set_ylabel('Action Entropy (All Samples)', fontsize=16, fontweight='bold')
+        ax.set_title('All Action Sample Entropy Comparison (Three-Way)', fontsize=18, fontweight='bold')
         ax.grid(True, alpha=0.3)
     
     plt.tight_layout()
@@ -990,9 +1205,9 @@ def create_plots_threeway(no_sampling: Dict, samples2: Dict = None, samples5: Di
                    f'{int(height)}',
                    ha='center', va='bottom', fontsize=9, fontweight='bold')
     
-    ax.set_xlabel('Action Type', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Number of Actions', fontsize=12, fontweight='bold')
-    ax.set_title('Action Count Comparison (Three-Way)', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Action Type', fontsize=16, fontweight='bold')
+    ax.set_ylabel('Number of Actions', fontsize=16, fontweight='bold')
+    ax.set_title('Action Count Comparison (Three-Way)', fontsize=18, fontweight='bold')
     ax.set_xticks(x)
     ax.set_xticklabels(categories)
     ax.legend(fontsize=11)
@@ -1043,10 +1258,10 @@ def create_plots_threeway(no_sampling: Dict, samples2: Dict = None, samples5: Di
                     color='#2ecc71', edgecolor='black', density=True)
             ax.hist(s2_discarded, bins=30, alpha=0.6, label=f'Discarded (n={len(s2_discarded)})', 
                     color='#e74c3c', edgecolor='black', density=True)
-            ax.set_xlabel('Action Entropy', fontsize=11, fontweight='bold')
-            ax.set_ylabel('Density', fontsize=11, fontweight='bold')
+            ax.set_xlabel('Action Entropy', fontsize=14, fontweight='bold')
+            ax.set_ylabel('Density', fontsize=14, fontweight='bold')
             ax.set_title(f'{sample2_type.capitalize()}: Action Entropy Distribution\n(Total: {s2_total} actions)', 
-                        fontsize=12, fontweight='bold')
+                        fontsize=16, fontweight='bold')
             ax.legend(fontsize=10)
             ax.grid(True, alpha=0.3)
         ax_idx += 1
@@ -1064,10 +1279,10 @@ def create_plots_threeway(no_sampling: Dict, samples2: Dict = None, samples5: Di
                     color='#2ecc71', edgecolor='black', density=True)
             ax.hist(s5_discarded, bins=30, alpha=0.6, label=f'Discarded (n={len(s5_discarded)})', 
                     color='#e74c3c', edgecolor='black', density=True)
-            ax.set_xlabel('Action Entropy', fontsize=11, fontweight='bold')
-            ax.set_ylabel('Density', fontsize=11, fontweight='bold')
+            ax.set_xlabel('Action Entropy', fontsize=14, fontweight='bold')
+            ax.set_ylabel('Density', fontsize=14, fontweight='bold')
             ax.set_title(f'{sample5_type.capitalize()}: Action Entropy Distribution\n(Total: {s5_total} actions)', 
-                        fontsize=12, fontweight='bold')
+                        fontsize=16, fontweight='bold')
             ax.legend(fontsize=10)
             ax.grid(True, alpha=0.3)
     
@@ -1085,7 +1300,7 @@ def create_plots_threeway(no_sampling: Dict, samples2: Dict = None, samples5: Di
             for ax in axes:
                 ax.set_ylim([0, y_max])
     
-    plt.suptitle('Action Entropy: Selected vs Discarded Samples (Normalized, Three-Way)', fontsize=14, fontweight='bold')
+    plt.suptitle('Action Entropy: Selected vs Discarded Samples (Normalized, Three-Way)', fontsize=18, fontweight='bold')
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, '4_action_entropy_selected_vs_discarded_threeway.png'), dpi=300, bbox_inches='tight')
     plt.close()
@@ -1130,22 +1345,108 @@ def create_plots_threeway(no_sampling: Dict, samples2: Dict = None, samples5: Di
             step_counts.append(s5_steps)
     
     if conditions:
+        # Compute confidence intervals
+        ci_lowers = []
+        ci_uppers = []
+        for step_list in step_counts:
+            stats = compute_statistics(step_list)
+            ci_lowers.append(stats.get('ci_lower', 0))
+            ci_uppers.append(stats.get('ci_upper', 0))
         
-        bars = ax.bar(conditions, avg_steps, color=colors, alpha=0.7, edgecolor='black', linewidth=1.5, yerr=std_steps, capsize=5)
-        ax.set_ylabel('Average Steps per Question', fontsize=12, fontweight='bold')
-        ax.set_title('Average Number of Steps per Question (Three-Way)', fontsize=14, fontweight='bold')
+        # Use confidence intervals for error bars instead of std
+        ci_errors = [[avg - ci_l, ci_u - avg] for avg, ci_l, ci_u in zip(avg_steps, ci_lowers, ci_uppers)]
+        
+        bars = ax.bar(conditions, avg_steps, color=colors, alpha=0.7, edgecolor='black', linewidth=2, 
+                     yerr=np.array(ci_errors).T, capsize=8)
+        # Add error bars with custom styling
+        for i, (bar, ci_l, ci_u) in enumerate(zip(bars, ci_lowers, ci_uppers)):
+            x_pos = bar.get_x() + bar.get_width()/2
+            height = bar.get_height()
+            ax.errorbar(x_pos, height, yerr=[[height - ci_l], [ci_u - height]], 
+                       fmt='none', color='black', capsize=8, capthick=2, linewidth=2)
+        ax.set_ylabel('Average Steps per Question', fontsize=16, fontweight='bold')
+        ax.set_title('Average Number of Steps per Question (Three-Way)', fontsize=18, fontweight='bold')
         ax.grid(True, alpha=0.3, axis='y')
         
-        # Add value labels on bars
-        for i, (bar, avg, std, step_list) in enumerate(zip(bars, avg_steps, std_steps, step_counts)):
+        # Add value labels on bars with confidence intervals
+        for i, (bar, avg, ci_l, ci_u, step_list) in enumerate(zip(bars, avg_steps, ci_lowers, ci_uppers, step_counts)):
             height = bar.get_height()
             total_questions = len(step_list)
-            ax.text(bar.get_x() + bar.get_width()/2., height + std + 0.1,
-                    f'{avg:.2f} ± {std:.2f}\n(n={total_questions})',
-                    ha='center', va='bottom', fontsize=10, fontweight='bold')
+            ax.text(bar.get_x() + bar.get_width()/2., height + (ci_u - avg) + 0.2,
+                    f'{avg:.2f}\n[{ci_l:.2f}, {ci_u:.2f}]\n(n={total_questions})',
+                    ha='center', va='bottom', fontsize=12, fontweight='bold')
     
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, '5_avg_steps_per_question_threeway.png'), dpi=300, bbox_inches='tight')
+    plt.close()
+    
+    # 6. Computational Cost Comparison (LLM Calls)
+    fig, ax = plt.subplots(figsize=(12, 6))
+    conditions_cost = []
+    avg_llm_calls = []
+    ci_lowers_cost = []
+    ci_uppers_cost = []
+    colors_cost = []
+    llm_counts = []
+    
+    # No-Sampling
+    no_llm = no_sampling.get('llm_calls_per_question', [])
+    if no_llm:
+        conditions_cost.append('No-Sampling')
+        stats = compute_statistics(no_llm)
+        avg_llm_calls.append(stats['mean'])
+        ci_lowers_cost.append(stats['ci_lower'])
+        ci_uppers_cost.append(stats['ci_upper'])
+        colors_cost.append('#3498db')
+        llm_counts.append(no_llm)
+    
+    # Samples2
+    if samples2:
+        s2_llm = samples2.get('llm_calls_per_question', [])
+        if s2_llm:
+            conditions_cost.append(sample2_type.capitalize())
+            stats = compute_statistics(s2_llm)
+            avg_llm_calls.append(stats['mean'])
+            ci_lowers_cost.append(stats['ci_lower'])
+            ci_uppers_cost.append(stats['ci_upper'])
+            colors_cost.append('#2ecc71')
+            llm_counts.append(s2_llm)
+    
+    # Samples5
+    if samples5:
+        s5_llm = samples5.get('llm_calls_per_question', [])
+        if s5_llm:
+            conditions_cost.append(sample5_type.capitalize())
+            stats = compute_statistics(s5_llm)
+            avg_llm_calls.append(stats['mean'])
+            ci_lowers_cost.append(stats['ci_lower'])
+            ci_uppers_cost.append(stats['ci_upper'])
+            colors_cost.append('#e74c3c')
+            llm_counts.append(s5_llm)
+    
+    if conditions_cost:
+        ci_errors_cost = [[avg - ci_l, ci_u - avg] for avg, ci_l, ci_u in zip(avg_llm_calls, ci_lowers_cost, ci_uppers_cost)]
+        bars = ax.bar(conditions_cost, avg_llm_calls, color=colors_cost, alpha=0.7, edgecolor='black', linewidth=2)
+        # Add error bars with custom styling
+        for i, (bar, avg, ci_l, ci_u) in enumerate(zip(bars, avg_llm_calls, ci_lowers_cost, ci_uppers_cost)):
+            x_pos = bar.get_x() + bar.get_width()/2
+            height = bar.get_height()
+            ax.errorbar(x_pos, height, yerr=[[height - ci_l], [ci_u - height]], 
+                       fmt='none', color='black', capsize=8, capthick=2, linewidth=2)
+        ax.set_ylabel('Average LLM Calls per Question', fontsize=16, fontweight='bold')
+        ax.set_title('Computational Cost: Average LLM Calls per Question (Three-Way)', fontsize=18, fontweight='bold')
+        ax.grid(True, alpha=0.3, axis='y')
+        
+        # Add value labels
+        for i, (bar, avg, ci_l, ci_u, llm_list) in enumerate(zip(bars, avg_llm_calls, ci_lowers_cost, ci_uppers_cost, llm_counts)):
+            height = bar.get_height()
+            total_questions = len(llm_list)
+            ax.text(bar.get_x() + bar.get_width()/2., height + (ci_u - avg) + 2,
+                    f'{avg:.1f}\n[{ci_l:.1f}, {ci_u:.1f}]\n(n={total_questions})',
+                    ha='center', va='bottom', fontsize=12, fontweight='bold')
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, '6_computational_cost_threeway.png'), dpi=300, bbox_inches='tight')
     plt.close()
     
     print(f"\nPlots saved to: {output_dir}/")
